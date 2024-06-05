@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { } from './styles';
+import {  Container } from './styles';
 
-const Button = () => {
+const Component = () => {
     
   return (
 <>
@@ -10,4 +10,4 @@ const Button = () => {
   )
 }
 
-export default Button
+export default Component
