@@ -4,8 +4,9 @@ import React from 'react';
 
 import InitialPage from '../screens/initialPage';
 import SignIn from '../screens/signIn';
+import SignUp from '../screens/signUp';
 
-const routes = [ InitialPage, SignIn]
+const routes = [ InitialPage, SignIn, SignUp ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {

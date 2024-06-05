@@ -1,20 +1,20 @@
-// InitialPage.js
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect} from 'react';
-import { StatusBar } from 'expo-status-bar';
-import image from '../../../assets/imgs/initial-login.png'
-import { Container, Image, TitleContainer, Title, Description } from './styles';
+
+import { Container, Image, TitleContainer } from './styles';
+import image from '../../../assets/imgs/initial-login.png';
 import Button from '../../components/button';
+
 const InitialPage = () => {
+ const { navigate } = useNavigation();
 
   return (
     <Container>
       <Image source={image}></Image>
       <TitleContainer>
-        <Button text='texto' />
-        <Button text='texto' variant='outline' icon={'plus'} />
+        <Button text='entrar'  margin='5px 0' onPress={() => navigate('SignIn')}/>
+        <Button text='cadastrar' margin='5px 0' onPress={() => navigate('SignUp')} variant='outline'/>
       </TitleContainer>
-
     </Container>
   );
 };

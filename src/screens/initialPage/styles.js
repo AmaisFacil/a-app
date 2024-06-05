@@ -11,23 +11,12 @@ export const Container = styled.View`
     flex: 1;
     `
 export const Image = styled.Image`
-    height: ${vh(45)};
+    height: ${vh(41)};
     width: ${vw(90)};
 `
 
 export const TitleContainer = styled.View`
     align-items: start;
-    height: auto;
     margin: 20px 0;
-` 
-
-export const Title = styled.Text`
-    color: ${({theme}) => theme.colors.text};
-    font-family: 'Black';
-    font-size: 30px;
-    `
-
-export const Description = styled.Text`
-    color: ${({theme}) => theme.colors.secondaryText};
-    font-size: 15px;
+    height: auto;
 `
