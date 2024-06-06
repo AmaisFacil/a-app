@@ -4,15 +4,16 @@ import React, { useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
+import Title from '../../components/title';
 
 const SignIn = () => {
  
   return (
     <Container>
-      <Backnav text='VOLTAR' variant='transparent'/>
+      <Backnav variant='transparent'/>
       <Content>
 
-      <Text>sign in</Text>
+      <Title text='Bem Vindo de Volta'/>
       </Content>
     </Container>
   );
