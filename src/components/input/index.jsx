@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Container, InputContainer } from './styles';
 
 const Input = (props) => {
-  const [textView, setTextView] = useState(variant == 'password');
+  const [textView, setTextView] = useState(!(variant == 'password'));
   const [focus, setFocus] = useState(false);
   const theme = useTheme();
 
@@ -27,7 +27,7 @@ const Input = (props) => {
       case'noicon':
         return null;
       case'password':
-        return <Feather color={getIconColor()} size={30} name={!textView ? 'eye' : 'eye-off'} onPress={() => setTextView(!textView)}/>
+        return <Feather color={getIconColor()} size={30} name={textView ? 'eye' : 'eye-off'} onPress={() => setTextView(!textView)}/>
       default:
         return   value?.length == 0 ? null : <Feather color={getIconColor()} size={30} name='x-octagon' onPress={() => props?.onChangeText ? props.onChangeText("") : null}/> 
     }
