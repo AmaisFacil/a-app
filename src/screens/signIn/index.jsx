@@ -5,6 +5,7 @@ import Backnav from '../../components/backnav';
 import Button from '../../components/button';
 import Title from '../../components/title';
 import Input from '../../components/input';
+import TextButton from '../../components/textButton';
 
 const SignIn = () => {
   const [password, setPassword ] = useState("");
@@ -37,6 +38,7 @@ const SignIn = () => {
           />
         </FormContainer>
         <Button text='ENTRAR' onPress={handleSignIn} width={70}/>
+        <TextButton text='Não tem uma conta? Cadastre-se'/>
       </Content>
     </Container>
   );
