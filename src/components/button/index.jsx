@@ -18,7 +18,7 @@ const Button = ({ text, variant, margin, onPress, icon, width, height, reverse }
   return (
     <Container variant={variant} icon={icon} width={width} height={height} margin={margin} onPress={onPress} reverse={reverse}>
       {
-        icon ? <Feather size={30} name={icon} color={getIconColor()} /> : null
+        icon ?? <Feather size={30} name={icon} color={getIconColor()} /> 
       }
       <Text variant={variant}>
         {text && text.toUpperCase()}

@@ -5,11 +5,20 @@ import useViewportUnits from '../../hooks/useViewport';
 const {vh, vw} = useViewportUnits();
 
 export const Container = styled.View`
-    background-color: ${({theme}) => theme.colors.secondaryBackground};
+    background-color: ${({theme}) => theme.colors.background};
     margin-top: ${Constants.statusBarHeight}px;
     flex: 1;
     `
 
 export const Content = styled.View`
+    justify-content: center;
+    align-items: center;
     padding: 5%;
+    flex: 1;
+    `
+
+export const FormContainer = styled.View`
+    justify-content: center;
+    align-items: center;
+    height: ${vh(40)};
     `
