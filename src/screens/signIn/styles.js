@@ -20,5 +20,6 @@ export const Content = styled.View`
 export const FormContainer = styled.View`
     justify-content: center;
     align-items: center;
-    height: ${vh(40)};
+    height: auto;
+    margin: ${vh(10)};
     `
