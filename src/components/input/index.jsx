@@ -40,7 +40,7 @@ const Input = (props) => {
       <InputContainer
          onFocus={() => setFocus(true)}
          onBlur={() => setFocus(false)}
-         secureTextEntry={textView}
+         secureTextEntry={variant=='password' && textView}
          {...props}
       />
       <ActionIcon/>

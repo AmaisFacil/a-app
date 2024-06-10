@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 
 import { Container, Content, FormContainer } from './styles';
@@ -9,15 +10,19 @@ import Button from '../../components/button';
 import Title from '../../components/title';
 import Input from '../../components/input';
 
+import { signIn } from '../../actions/user';
+
 const SignIn = () => {
-  const [password, setPassword ] = useState("");
-  const [email, setEmail ] = useState("");
+  const [password, setPassword ] = useState("12345678");
+  const [email, setEmail ] = useState("admin@gmail.com");
 
   const isKeyboardActive = useKeyboardStatus();
   const navigate = useNavigation();
+  const dispatch = useDispatch();
  
   const handleSignIn = async () => {
-
+    const response = await signIn(dispatch, { email, password });
+    console.log(response);
   };
 
   return (
