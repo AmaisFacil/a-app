@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import React from 'react';
 
 import InitialPage from '../screens/initialPage';
@@ -12,10 +13,12 @@ const routes = [ InitialPage, SignIn, SignUp, Home ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
+
+  const user = useSelector((state) => state.user);
   
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='InitialPage'>
+    <Stack.Navigator initialRouteName={user?._id ? 'Home' : 'InitialPage'}>
       {
         routes && routes.map((screen, i) => (
             <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>
