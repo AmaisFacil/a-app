@@ -1,12 +1,11 @@
 import { setUser, updateUser } from '../redux/actions/user';
-import api from "../utils/api";
+import api, { setAuthorizationToken } from "../utils/api";
 
 const getUser = async (dispatch) => {
   try {
-    const response = await api.get('user/get-user');
-    const data = response.data?.user;
-
-    dispatch(setUser(data));
+    const response = await api.get('/auth/get-user');
+    const data = response.data;
+    dispatch(updateUser(data));
 
     return data;
   } catch (error) {
@@ -19,9 +18,11 @@ const signIn = async (dispatch, userData) => {
     const response = await api.post('/auth/get-token', userData);
     const data = response.data;
 
-    dispatch(updateUser(data));
+    await setAuthorizationToken(data.token)
+    dispatch(setUser({ token: data.token }));
+    const user = await getUser(dispatch);
 
-    return data;
+    return user;
   } catch (error) {
     return { error: error?.response?.data?.msg };
   }
@@ -32,9 +33,11 @@ const signUp = async (dispatch, userData) => {
     const response = await api.post('/users/signup', userData);
     const data = response.data;
 
-    dispatch(updateUser(data));
+    await setAuthorizationToken(data.token)
+    dispatch(setUser({ token: data.token }));
+    const user = await getUser(dispatch);
 
-    return data;
+    return user;
   } catch (error) {
     return { error: error?.response?.data?.msg };
   }

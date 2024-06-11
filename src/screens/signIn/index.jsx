@@ -22,7 +22,6 @@ const SignIn = () => {
  
   const handleSignIn = async () => {
     const response = await signIn(dispatch, { email, password });
-    console.log(response);
   };
 
   return (
