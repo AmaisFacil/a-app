@@ -4,17 +4,17 @@ import React from 'react';
 
 import InitialPage from '../screens/initialPage';
 import SignIn from '../screens/signIn';
-import SignUp from '../screens/signIn copy';
-import Home from '../screens/signUp copy';
+import SignUp from '../screens/signUp';
 
-const routes = [ InitialPage, SignIn, SignUp, Home ]
+
+const routes = [ InitialPage, SignIn, SignUp ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
   
   return (
   <NavigationContainer>
-    <Stack.Navigator initialRouteName='SignIn'>
+    <Stack.Navigator initialRouteName='SignUp'>
       {
         routes && routes.map((screen, i) => (
             <Stack.Screen key={i} name={screen.name} component={screen} options={{ headerShown: false }}/>
