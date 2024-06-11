@@ -13,8 +13,8 @@ import Title from '../../components/title';
 import Input from '../../components/input';
 
 const SignIn = () => {
-  const [password, setPassword ] = useState("123456");
-  const [email, setEmail ] = useState("admin@gmail.com");
+  const [password, setPassword ] = useState("");
+  const [email, setEmail ] = useState("");
   const [status, setStatus] = useState('');
   const [error, setError] = useState('');
 
@@ -41,7 +41,7 @@ const SignIn = () => {
     setStatus('');
     navigate.reset({
       index: 0, 
-      routes: [{ name: 'home' }],
+      routes: [{ name: 'Home' }],
     })
 
   };

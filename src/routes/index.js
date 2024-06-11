@@ -4,9 +4,10 @@ import React from 'react';
 
 import InitialPage from '../screens/initialPage';
 import SignIn from '../screens/signIn';
-import SignUp from '../screens/signUp';
+import SignUp from '../screens/signIn copy';
+import Home from '../screens/signUp copy';
 
-const routes = [ InitialPage, SignIn, SignUp ]
+const routes = [ InitialPage, SignIn, SignUp, Home ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
