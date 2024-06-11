@@ -1,12 +1,14 @@
-import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
-import { Container, Text } from './styles';
+import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
+import React from 'react';
 
-const Button = ({ text, variant, margin, onPress, icon, width, height, reverse }) => {
+import { Container, Text } from './styles';
+
+const Button = ({ text, variant, margin, onPress, icon, width, height, reverse, loading }) => {
   const theme = useTheme();
 
-  const getIconColor = () => {
+  const getThemeColor = () => {
     switch (variant) {
       case 'outline':
         return theme.colors.primary;
@@ -18,11 +20,11 @@ const Button = ({ text, variant, margin, onPress, icon, width, height, reverse }
   return (
     <Container variant={variant} icon={icon} width={width} height={height} margin={margin} onPress={onPress} reverse={reverse}>
       {
-        icon ?? <Feather size={30} name={icon} color={getIconColor()} /> 
+        (icon && !loading) ?? <Feather size={30} name={icon} color={getThemeColor()} /> 
       }
-      <Text variant={variant}>
-        {text && text.toUpperCase()}
-      </Text>
+      {
+        loading ? <ActivityIndicator size={30} color={getThemeColor()} /> : <Text variant={variant}> {text && text.toUpperCase()} </Text>
+      }
     </Container>
   );
 }
