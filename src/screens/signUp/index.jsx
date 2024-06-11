@@ -87,7 +87,7 @@ const SignUp = () => {
             error ? <ErrorText>{error}</ErrorText> : null
           }
         </FormContainer>
-        <Button text='CADASTRAR' onPress={handleSignIn} width={70} loading={status=='loading'}/>
+        <Button text='CADASTRAR' onPress={handleSignIn} width={70} variant='outline' loading={status=='loading'}/>
         {
           isKeyboardActive ? null : <TextButton text='Já tem uma conta? Entre' margin='10px 0' onPress={() => navigate.navigate('SignIn')}/>
         }
