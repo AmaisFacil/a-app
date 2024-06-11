@@ -79,7 +79,7 @@ const SignIn = () => {
         </FormContainer>
         <Button text='ENTRAR' onPress={handleSignIn} width={70} loading={status=='loading'}/>
         {
-          isKeyboardActive ? null : <TextButton text='Não tem uma conta? Cadastre-se' margin='10px 0' onPress={() => navigate('SignUp')}/>
+          isKeyboardActive ? null : <TextButton text='Não tem uma conta? Cadastre-se' margin='10px 0' onPress={() => navigate.navigate('SignUp')}/>
         }
       </Content>
     </Container>
