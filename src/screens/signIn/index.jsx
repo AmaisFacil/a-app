@@ -13,15 +13,21 @@ import Input from '../../components/input';
 import { signIn } from '../../actions/user';
 
 const SignIn = () => {
-  const [password, setPassword ] = useState("12345678");
+  const [password, setPassword ] = useState("123456");
   const [email, setEmail ] = useState("admin@gmail.com");
+  const [status, setStatus] = useState('');
 
   const isKeyboardActive = useKeyboardStatus();
   const navigate = useNavigation();
   const dispatch = useDispatch();
  
   const handleSignIn = async () => {
+    setStatus('loading');
     const response = await signIn(dispatch, { email, password });
+    if (response.error) {
+      return setStatus('error')
+    }
+    setStatus('');
   };
 
   return (
@@ -36,6 +42,7 @@ const SignIn = () => {
             onChangeText={(x) => setEmail(x)}
             placeholder='email@email.com'
             margin={'10px 0'}
+            status={status}
             value={email}
             icon='user'
             width={80}
@@ -46,11 +53,12 @@ const SignIn = () => {
             variant='password'
             margin={'10px 0'}
             value={password}
+            status={status}
             icon='unlock'
             width={80}
           />
         </FormContainer>
-        <Button text='ENTRAR' onPress={handleSignIn} width={70}/>
+        <Button text='ENTRAR' onPress={handleSignIn} width={70} loading={status=='loading'}/>
         {
           isKeyboardActive ? null : <TextButton text='Não tem uma conta? Cadastre-se' margin='10px 0' onPress={() => navigate('SignUp')}/>
         }
