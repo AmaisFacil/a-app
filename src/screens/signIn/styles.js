@@ -23,3 +23,9 @@ export const FormContainer = styled.View`
     height: auto;
     margin: ${vh(10)};
     `
+
+export const ErrorText = styled.Text`
+    font-size: ${({size}) => size ?  size + 'px' : '12px'};
+    width: 100%;
+    color: red;
+`;

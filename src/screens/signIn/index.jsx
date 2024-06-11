@@ -2,32 +2,48 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 
-import { Container, Content, FormContainer } from './styles';
+import { Container, Content, FormContainer, ErrorText } from './styles';
 import useKeyboardStatus from '../../hooks/useKeybordStatus';
 import TextButton from '../../components/textButton';
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
+import { signIn } from '../../actions/user';
+import useRegex from '../../hooks/useRegex';
 import Title from '../../components/title';
 import Input from '../../components/input';
-
-import { signIn } from '../../actions/user';
 
 const SignIn = () => {
   const [password, setPassword ] = useState("123456");
   const [email, setEmail ] = useState("admin@gmail.com");
   const [status, setStatus] = useState('');
+  const [error, setError] = useState('');
 
   const isKeyboardActive = useKeyboardStatus();
   const navigate = useNavigation();
   const dispatch = useDispatch();
+  const regex = useRegex();
  
   const handleSignIn = async () => {
     setStatus('loading');
+    if (email.length  <= 0 || password.length  <= 0){
+      setError("complete todos os campos");
+      return setStatus('error');
+    }
+    if (regex.email(email)){
+      setError("email inválido");
+      return setStatus('error');
+    }
     const response = await signIn(dispatch, { email, password });
     if (response.error) {
-      return setStatus('error')
+      setError(response.error);
+      return setStatus('error');
     }
     setStatus('');
+    navigate.reset({
+      index: 0, 
+      routes: [{ name: 'home' }],
+    })
+
   };
 
   return (
@@ -57,6 +73,9 @@ const SignIn = () => {
             icon='unlock'
             width={80}
           />
+          {
+            error ? <ErrorText>{error}</ErrorText> : null
+          }
         </FormContainer>
         <Button text='ENTRAR' onPress={handleSignIn} width={70} loading={status=='loading'}/>
         {
