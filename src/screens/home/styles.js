@@ -26,3 +26,25 @@ export const Navbar= styled.View`
     padding: 15px 5%;
     margin: 0;
 `
+
+export const CategoryTitle = styled.View`
+    justify-content: start;
+    flex-direction: row;
+    align-items: center;
+    margin: 10px 0;
+    width: 100%;
+`
+
+export const ServiceButton = styled.TouchableOpacity`
+    background-color: ${({theme}) => theme.colors.secondaryBackground};
+    justify-content: center;
+    margin: 0 ${vw(2.5)};
+    border-radius: 50px;
+    align-items: center;
+    width: ${vw(20)};
+    height: ${vw(20)};
+`
+export const ServiceContainer = styled.View`
+    justify-content: center;
+    width: 100%;
+`   
