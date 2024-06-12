@@ -10,16 +10,20 @@ import Title from '../../components/title';
 import Input from '../../components/input';
 import Button from '../../components/button';
 
-const ProfileEdit = () => {
-  const [value, setValue] = useState("");
-  const [status, setStatus] = useState("");
+const ProfileEdit = ({route}) => {
 
   const user = useSelector((state) => state.user);
+  const { type, text } = route.params;
+  
+  const [value, setValue] = useState(user[type]);
+  const [status, setStatus] = useState("");
+
   const { navigate } = useNavigation();
 
   const handleUpdate = async () => {
     setStatus('loading');
   }
+ 
 
   return (
     <Container>
@@ -27,7 +31,7 @@ const ProfileEdit = () => {
       <Content>
           <Input
               onChangeText={(x) => setValue(x)}
-              placeholder=""
+              placeholder={text}
               value={value}
               icon='edit-2'
               width={90}

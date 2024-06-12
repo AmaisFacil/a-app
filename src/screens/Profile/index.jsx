@@ -47,9 +47,9 @@ const Profile = () => {
             </Highlight>
 
         </HighlightsContainer>
-        <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate("ProfileEdit")}/>
-        <InformationButton title='Nome completo' description={user?.name ? user.name : 'Name não cadastrado'} onPress={() => navigate()}/>
-        <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate()}/>
+        <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'about', text: 'Sobre mim'})}/>
+        <InformationButton title='Nome completo' description={user?.name ? user.name : 'Nome não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'name', text: 'Nome'})}/>
+        <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'cpf', text: 'CPF'})}/>
         <InformationButton title='Historico' onPress={() => navigate()}/>
       </Content>
     </Container>
