@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 import { Container, Content } from './styles';
@@ -9,19 +9,25 @@ import Backnav from '../../components/backnav';
 import Title from '../../components/title';
 import Input from '../../components/input';
 import Button from '../../components/button';
+import { updateProfile } from '../../actions/user';
 
 const ProfileEdit = ({route}) => {
 
   const user = useSelector((state) => state.user);
   const { type, text } = route.params;
   
-  const [value, setValue] = useState(user[type]);
+  const [value, setValue] = useState(user[type] || "");
   const [status, setStatus] = useState("");
 
   const { navigate } = useNavigation();
+  const dispatch = useDispatch();
 
   const handleUpdate = async () => {
     setStatus('loading');
+    if (value.length  <= 0) return setStatus('error');
+    await updateProfile(dispatch, {id: user._id, data: { [type]: value}});
+    setStatus('');
+    return navigate("Profile");
   }
  
 
@@ -32,6 +38,7 @@ const ProfileEdit = ({route}) => {
           <Input
               onChangeText={(x) => setValue(x)}
               placeholder={text}
+              status={status}
               value={value}
               icon='edit-2'
               width={90}

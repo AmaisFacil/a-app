@@ -13,9 +13,9 @@ const getUser = async (dispatch) => {
   }
 };
 
-const updateProfile = async (dispatch) => {
+const updateProfile = async (dispatch, data) => {
   try {
-    const response = await api.post('/users/update-user');
+    const response = await api.post('/users/update-user', data);
     const user = await getUser(dispatch);
 
     return user;
@@ -54,4 +54,4 @@ const signUp = async (dispatch, userData) => {
   }
 };
 
-export { getUser, signIn, signUp };
+export { getUser, signIn, signUp, updateProfile };
