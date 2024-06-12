@@ -32,7 +32,7 @@ const Historic = () => {
           {
             (historic && historic.length > 0) ? historic.map((item, index) => {
               return (
-                <InformationButton key={index} title={formatDate(item?.date, true)} description={item?.message.replace('**','')} onPress={() => navigate()}/>
+                <InformationButton key={index} title={formatDate(item?.date, true)} description={item?.message.replace('**','')} onPress={() => navigate('HistoricPreview', { historic: item })}/>
               )
             })
             :

@@ -11,7 +11,6 @@ export const Container = styled.View`
     `
 
 export const Content = styled.View`
-    align-items: center;
     padding: 5%;
     flex: 1;
     `
