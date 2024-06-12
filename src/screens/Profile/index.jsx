@@ -10,12 +10,14 @@ import Description from '../../components/description';
 import Backnav from '../../components/backnav';
 import Title from '../../components/title';
 import Avatar from '../../components/avatar';
+import InformationButton from '../../components/informationButton';
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const { navigate } = useNavigation();
   const theme = useTheme();
 
+  console.log(user)
   return (
     <Container>
       <Backnav text='Perfil'/>
@@ -27,7 +29,10 @@ const Profile = () => {
            <Description  text={user?.email || ""}/>
           </ProfileSection>
         </ProfileInformations>
-
+        <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate()}/>
+        <InformationButton title='Nome completo' description={user?.name ? user.name : 'Name não cadastrado'} onPress={() => navigate()}/>
+        <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate()}/>
+        <InformationButton title='Historico' onPress={() => navigate()}/>
       </Content>
     </Container>
   );
