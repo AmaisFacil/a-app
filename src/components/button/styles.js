@@ -12,6 +12,10 @@ export const Container = styled.TouchableOpacity`
                     background-color: transparent;
                     border: 4px solid ${theme.colors.primary};
                 `;
+            case 'error':
+                return `
+                    background-color: red;
+                `;
             default:
                 return `
                     background-color: ${theme.colors.primary};

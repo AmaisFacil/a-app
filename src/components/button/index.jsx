@@ -12,6 +12,8 @@ const Button = ({ text, variant, margin, onPress, icon, width, height, reverse, 
     switch (variant) {
       case 'outline':
         return theme.colors.primary;
+      case 'error':
+        return theme.colors.background;
       default:
         return theme.colors.background;
     }
