@@ -3,7 +3,7 @@ import useViewport from '../../hooks/useViewport';
 
 const { vw } = useViewport();
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
     ${({ variant, theme }) => {
         switch (variant) {
             case 'outline':

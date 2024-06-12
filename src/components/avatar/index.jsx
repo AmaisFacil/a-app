@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Container, Text } from './styles';
 
-const Avatar = ({ name, image, variant, size, margin }) => {
+const Avatar = ({ name, image, variant, size, margin, onPress}) => {
 
   const getInitials = () => {
     if (!name) return '';
@@ -16,6 +16,7 @@ const Avatar = ({ name, image, variant, size, margin }) => {
       variant={variant} 
       size={size} 
       margin={margin}
+      onPress={onPress}
     >
       {
         image ? <Image source={{ uri: image }} style={{ width: '100%', height: '100%', borderRadius: size / 2 }} /> :

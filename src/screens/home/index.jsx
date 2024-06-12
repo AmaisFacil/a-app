@@ -6,6 +6,7 @@ import { Container, Content, Navbar } from './styles';
 import BannerCarousel from '../../components/bannersCarousel';
 import Avatar from '../../components/avatar';
 import Button from '../../components/button';
+import Title from '../../components/title';
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -29,10 +30,12 @@ const Home = () => {
         />
         <Avatar 
           name={user?.name || ""}
+          onPress={() => navigate('Profile')}
         />
       </Navbar>
       <Content>
         <BannerCarousel banners={banners} /> 
+        <Title text='Serviços'/>
 
       </Content>
     </Container>
