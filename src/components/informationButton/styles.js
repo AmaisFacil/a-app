@@ -11,4 +11,5 @@ export const Container = styled.TouchableOpacity`
 
 export const TextContainer = styled.View`
     flex-direction: column;
+    width: 90%;
 `;

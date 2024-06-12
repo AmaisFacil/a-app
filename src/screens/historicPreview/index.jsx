@@ -10,9 +10,8 @@ import { Container, Content } from './styles';
 import Title from '../../components/title';
 import { ScrollView } from 'react-native';
 
-const Historic = () => {
+const HistoricPreview = () => {
   const { navigate } = useNavigation();
-  const [historic, setHistoric] = useState([]);
 
   const get = async () => {
     const response = await getHistoric();
@@ -25,23 +24,14 @@ const Historic = () => {
 
   return (
     <Container>
-      <Backnav text='Historico'/>
+      <Backnav text='Visualizar historico'/>
       <Content>
         <ScrollView showsVerticalScrollIndicator={false}>
 
-          {
-            (historic && historic.length > 0) ? historic.map((item, index) => {
-              return (
-                <InformationButton key={index} title={formatDate(item?.date, true)} description={item?.message.replace('**','')} onPress={() => navigate()}/>
-              )
-            })
-            :
-            <Title text={'nenhum historico disponivel'} size={20}/>
-          }
         </ScrollView>
       </Content>
     </Container>
   );
 };
 
-export default Historic;
+export default HistoricPreview;
