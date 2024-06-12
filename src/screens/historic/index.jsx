@@ -3,9 +3,10 @@ import React, { useState, useEffect} from 'react';
 
 
 import InformationButton from '../../components/informationButton';
+import { getHistoric } from '../../actions/user';
+import formatDate from '../../utils/formatDate';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
-import { getHistoric } from '../../actions/user';
 import Title from '../../components/title';
 
 const Historic = () => {
@@ -28,7 +29,7 @@ const Historic = () => {
         {
           (historic && historic.length > 0) ? historic.map((item, index) => {
             return (
-              <InformationButton key={index} title={item?.date} description={item?.message} onPress={() => navigate()}/>
+              <InformationButton key={index} title={formatDate(item?.date, true)} description={item?.message.replace('**','')} onPress={() => navigate()}/>
             )
           })
           :
