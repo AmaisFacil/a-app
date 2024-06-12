@@ -16,3 +16,14 @@ export const Content = styled.View`
     padding: 5%;
     flex: 1;
     `
+
+export const Navbar= styled.View`
+    background-color: ${({theme}) => theme.colors.secondaryBackground};
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: ${vw(100)};
+    height: ${vh(10)};
+    padding: 15px 5%;
+    margin: 0;
+`
