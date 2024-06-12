@@ -31,7 +31,7 @@ export const CategoryTitle = styled.View`
     justify-content: start;
     flex-direction: row;
     align-items: center;
-    margin: 10px 0;
+    margin: ${vh(4)} 0;
     width: 100%;
 `
 

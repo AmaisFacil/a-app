@@ -66,17 +66,20 @@ const Home = () => {
         <CategoryTitle>
           <Title text='Serviços' size={22}/>
         </CategoryTitle>
-          <ServiceContainer>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}  contentContainerStyle={{justifyContent:'space-between', alignItems: 'center', flexDirection: 'row'}}>
-            {
-              services.map((item, index) => (
-                <ServiceButton onPress={() => navigate(item.route)} key={index}>
-                    <Feather size={30} name={item.icon} color={theme.colors.primary} />
-                </ServiceButton>
-              ))
-            }
-        </ScrollView>
-          </ServiceContainer>
+        <ServiceContainer>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}  contentContainerStyle={{justifyContent:'space-between', alignItems: 'center', flexDirection: 'row'}}>
+              {
+                services.map((item, index) => (
+                  <ServiceButton onPress={() => navigate(item.route)} key={index}>
+                      <Feather size={30} name={item.icon} color={theme.colors.primary} />
+                  </ServiceButton>
+                ))
+              }
+          </ScrollView>
+        </ServiceContainer>
+        <CategoryTitle>
+          <Title text='Nossos Planos' size={22}/>
+        </CategoryTitle>
 
       </Content>
     </Container>

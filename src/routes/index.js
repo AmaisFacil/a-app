@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 import React from 'react';
 
 import InitialPage from '../screens/initialPage';
+import Profile from '../screens/Profile';
 import SignIn from '../screens/signIn';
 import SignUp from '../screens/signUp';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home ]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile ]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
