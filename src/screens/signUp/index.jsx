@@ -39,6 +39,10 @@ const SignUp = () => {
       setError(response.error);
       return setStatus('error');
     }
+    if (!response._id) {
+      setError('erro interno na requisição');
+      return setStatus('error');
+    }
     setStatus('');
     navigate.reset({
       index: 0, 
