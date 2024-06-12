@@ -13,6 +13,17 @@ const getUser = async (dispatch) => {
   }
 };
 
+const updateProfile = async (dispatch) => {
+  try {
+    const response = await api.post('/users/update-user');
+    const user = await getUser(dispatch);
+
+    return user;
+  } catch (error) {
+    return { error: error?.response?.data?.msg };
+  }
+};
+
 const signIn = async (dispatch, userData) => {
   try {
     const response = await api.post('/auth/get-token', userData);
