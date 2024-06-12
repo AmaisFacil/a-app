@@ -1,21 +1,20 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect} from 'react';
+import { ScrollView } from 'react-native';
 
 
 import InformationButton from '../../components/informationButton';
-import { getHistoric } from '../../actions/user';
-import formatDate from '../../utils/formatDate';
+import { getWebproves } from '../../actions/webprove';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Title from '../../components/title';
-import { ScrollView } from 'react-native';
 
 const Webproves = () => {
   const { navigate } = useNavigation();
   const [webproves, setWebproves] = useState([]);
 
   const get = async () => {
-    const response = await getHistoric();
+    const response = await getWebproves();
     setWebproves(response);
   };
 
@@ -32,7 +31,7 @@ const Webproves = () => {
           {
             (webproves && webproves.length > 0) ? webproves.map((item, index) => {
               return (
-                <InformationButton key={index} title={formatDate(item?.date, true)} description={item?.message.replace('**','')} onPress={() => navigate('WebprovePreview', { webprove: item })}/>
+                <InformationButton key={index} title={item.form?.name || ""} description={item.form?.details.slice(0,150) || "sem descrição"} onPress={() => navigate('WebprovePreview', { webprove: item })}/>
               )
             })
             :
