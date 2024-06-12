@@ -1,5 +1,6 @@
-import { setUser, updateUser } from '../redux/actions/user';
+import { setUser, updateUser, deleteUser } from '../redux/actions/user';
 import api, { setAuthorizationToken } from "../utils/api";
+import storage from '../utils/storage';
 
 const getUser = async (dispatch) => {
   try {
@@ -12,6 +13,18 @@ const getUser = async (dispatch) => {
     return { error: error?.response?.data?.msg };
   }
 };
+
+const logout = async (dispatch) => {
+  try {
+    dispatch(deleteUser());
+    storage.remove('token');
+    setAuthorizationToken();
+    return;
+  } catch (error) {
+    return { error: error?.response?.data?.msg };
+  }
+};
+
 const getHistoric = async () => {
   try {
     const response = await api.get('/users/historic');
@@ -65,4 +78,4 @@ const signUp = async (dispatch, userData) => {
   }
 };
 
-export { getUser, signIn, signUp, updateProfile, getHistoric };
+export { getUser, signIn, signUp, updateProfile, getHistoric, logout };
