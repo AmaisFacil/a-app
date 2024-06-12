@@ -15,7 +15,7 @@ import Title from '../../components/title';
 const Profile = () => {
   const user = useSelector((state) => state.user);
   const [status, setStatus] = useState('');
-  const { reset } = useNavigation();
+  const { reset, navigate } = useNavigation();
 
   const handleLogout = async () => {
     setStatus('loading');
