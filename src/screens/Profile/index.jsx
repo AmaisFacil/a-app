@@ -17,7 +17,6 @@ const Profile = () => {
   const { navigate } = useNavigation();
   const theme = useTheme();
 
-  console.log(user)
   return (
     <Container>
       <Backnav text='Perfil'/>
@@ -48,7 +47,7 @@ const Profile = () => {
             </Highlight>
 
         </HighlightsContainer>
-        <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate()}/>
+        <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate("ProfileEdit")}/>
         <InformationButton title='Nome completo' description={user?.name ? user.name : 'Name não cadastrado'} onPress={() => navigate()}/>
         <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate()}/>
         <InformationButton title='Historico' onPress={() => navigate()}/>
