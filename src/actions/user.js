@@ -12,6 +12,16 @@ const getUser = async (dispatch) => {
     return { error: error?.response?.data?.msg };
   }
 };
+const getHistoric = async () => {
+  try {
+    const response = await api.get('/users/historic');
+    const data = response.data;
+
+    return data;
+  } catch (error) {
+    return { error: error?.response?.data?.msg };
+  }
+};
 
 const updateProfile = async (dispatch, data) => {
   try {
@@ -35,6 +45,7 @@ const signIn = async (dispatch, userData) => {
 
     return user;
   } catch (error) {
+    console.log(error.request)
     return { error: error?.response?.data?.msg };
   }
 };
@@ -54,4 +65,4 @@ const signUp = async (dispatch, userData) => {
   }
 };
 
-export { getUser, signIn, signUp, updateProfile };
+export { getUser, signIn, signUp, updateProfile, getHistoric };
