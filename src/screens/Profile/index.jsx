@@ -5,7 +5,7 @@ import { useTheme } from 'styled-components';
 import { useSelector } from 'react-redux';
 
 
-import { Container, Content, ProfileInformations,  ProfileSection} from './styles';
+import { Container, Content, Highlight, HighlightsContainer, HighlightText, ProfileInformations,  ProfileSection} from './styles';
 import Description from '../../components/description';
 import Backnav from '../../components/backnav';
 import Title from '../../components/title';
@@ -29,6 +29,25 @@ const Profile = () => {
            <Description  text={user?.email || ""}/>
           </ProfileSection>
         </ProfileInformations>
+        <HighlightsContainer>
+            <Highlight>
+              <Description text='Creditos'/>
+              <HighlightText>0</HighlightText>
+            </Highlight>
+            <Highlight>
+              <Description text='Certificados'/>
+              <HighlightText>0</HighlightText>
+            </Highlight>
+            <Highlight>
+              <Description text='Webproves'/>
+              <HighlightText>0</HighlightText>
+            </Highlight>
+            <Highlight>
+              <Description text='Gravações'/>
+              <HighlightText>0</HighlightText>
+            </Highlight>
+
+        </HighlightsContainer>
         <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate()}/>
         <InformationButton title='Nome completo' description={user?.name ? user.name : 'Name não cadastrado'} onPress={() => navigate()}/>
         <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate()}/>

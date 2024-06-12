@@ -28,3 +28,20 @@ export const ProfileSection = styled.View`
     flex-direction: column;
     align-items: end;
 `
+export const HighlightsContainer = styled.View`
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-items: center;
+    height: ${vh(25)};
+    width: 100%;
+`
+export const Highlight = styled.View`
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+`
+export const HighlightText = styled.Text`
+    color: ${({theme}) => theme.colors.primary};
+    font-family: 'Bold';
+    font-size: 30px;
+`;
