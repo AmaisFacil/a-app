@@ -1,16 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
-import Feather from 'react-native-vector-icons/Feather';
 import React, { useState, useEffect} from 'react';
 import { useTheme } from 'styled-components';
 import { useSelector } from 'react-redux';
 
 
 import { Container, Content, Highlight, HighlightsContainer, HighlightText, ProfileInformations,  ProfileSection} from './styles';
+import InformationButton from '../../components/informationButton';
 import Description from '../../components/description';
 import Backnav from '../../components/backnav';
-import Title from '../../components/title';
 import Avatar from '../../components/avatar';
-import InformationButton from '../../components/informationButton';
+import Title from '../../components/title';
 
 const Profile = () => {
   const user = useSelector((state) => state.user);
@@ -50,7 +49,7 @@ const Profile = () => {
         <InformationButton title='Sobre Mim' description={user?.about ? user.about : 'Sobre mim não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'about', text: 'Sobre mim'})}/>
         <InformationButton title='Nome completo' description={user?.name ? user.name : 'Nome não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'name', text: 'Nome'})}/>
         <InformationButton title='CPF' description={user?.cpf ? user.cpf : 'CPF não cadastrado'} onPress={() => navigate("ProfileEdit", { type: 'cpf', text: 'CPF'})}/>
-        <InformationButton title='Historico' onPress={() => navigate()}/>
+        <InformationButton title='Historico' onPress={() => navigate('Historic')}/>
       </Content>
     </Container>
   );

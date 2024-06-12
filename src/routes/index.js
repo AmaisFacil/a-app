@@ -5,13 +5,14 @@ import React from 'react';
 
 import InitialPage from '../screens/initialPage';
 import ProfileEdit from '../screens/profileEdit';
+import Historic from '../screens/historic';
 import Profile from '../screens/Profile';
 import SignIn from '../screens/signIn';
 import SignUp from '../screens/signUp';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit ]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
