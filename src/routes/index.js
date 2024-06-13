@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import React from 'react';
 
+import CertificatePreview from '../screens/certificatePreview';
 import HistoricPreview from '../screens/historicPreview';
 import WebprovePreview from '../screens/webprovePreview';
 import Certificates from '../screens/certificates';
@@ -16,7 +17,7 @@ import SignUp from '../screens/signUp';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates, CertificatePreview]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
