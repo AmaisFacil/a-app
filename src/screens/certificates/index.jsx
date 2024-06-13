@@ -15,7 +15,6 @@ const Certificates = () => {
 
   const get = async () => {
     const response = await getCertificates();
-    console.log(response)
     setCertificates(response);
   };
 
