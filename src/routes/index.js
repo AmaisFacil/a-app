@@ -5,6 +5,7 @@ import React from 'react';
 
 import HistoricPreview from '../screens/historicPreview';
 import WebprovePreview from '../screens/webprovePreview';
+import Certificates from '../screens/certificates';
 import InitialPage from '../screens/initialPage';
 import ProfileEdit from '../screens/profileEdit';
 import Webproves from '../screens/webproves';
@@ -15,7 +16,7 @@ import SignUp from '../screens/signUp';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {

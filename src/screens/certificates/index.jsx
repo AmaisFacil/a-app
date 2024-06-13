@@ -4,17 +4,18 @@ import { ScrollView } from 'react-native';
 
 
 import InformationButton from '../../components/informationButton';
-import { getWebproves } from '../../actions/webprove';
+import { getCertificates } from '../../actions/certificate';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Title from '../../components/title';
 
-const Webproves = () => {
+const Certificates = () => {
   const { navigate } = useNavigation();
   const [certificates, setCertificates] = useState([]);
 
   const get = async () => {
-    const response = await getWebproves();
+    const response = await getCertificates();
+    console.log(response)
     setCertificates(response);
   };
 
@@ -31,7 +32,7 @@ const Webproves = () => {
           {
             (certificates && certificates.length > 0) ? certificates.map((item, index) => {
               return (
-                <InformationButton key={index} title={item.form?.name || ""} description={item.form?.details.slice(0,150) || "sem descrição"} onPress={() => navigate('CertificatePreview', { webprove: item })}/>
+                <InformationButton key={index} title={item?.title || ""} description={item?.description.slice(0,150) || "sem descrição"} onPress={() => navigate('CertificatePreview', { webprove: item })}/>
               )
             })
             :
@@ -43,4 +44,4 @@ const Webproves = () => {
   );
 };
 
-export default Webproves;
+export default Certificates;
