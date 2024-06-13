@@ -31,7 +31,7 @@ const Certificates = () => {
           {
             (certificates && certificates.length > 0) ? certificates.map((item, index) => {
               return (
-                <InformationButton key={index} title={item?.title || ""} description={item?.description.slice(0,150) || "sem descrição"} onPress={() => navigate('CertificatePreview', { webprove: item })}/>
+                <InformationButton key={index} title={item?.title || ""} description={item?.description.slice(0,150) || "sem descrição"} onPress={() => navigate('CertificatePreview', { certificate: item })}/>
               )
             })
             :
