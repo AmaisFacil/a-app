@@ -14,10 +14,11 @@ import Historic from '../screens/historic';
 import Profile from '../screens/Profile';
 import SignIn from '../screens/signIn';
 import SignUp from '../screens/signUp';
+import Create from '../screens/create';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates, CertificatePreview]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates, CertificatePreview, Create]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {
