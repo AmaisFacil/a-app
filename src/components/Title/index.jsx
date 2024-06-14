@@ -2,10 +2,10 @@ import React from 'react';
 
 import {  Text } from './styles';
 
-const Title = ({text, size}) => {
+const Title = ({text, size, align}) => {
     
   return (
-        <Text size={size}>
+        <Text size={size} align={align}>
           {text}
         </Text>
   )
