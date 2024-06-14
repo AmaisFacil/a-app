@@ -51,6 +51,7 @@ const Home = () => {
           text='criar' 
           width={35} 
           height={5}
+          onPress={() => navigate('Create')}
         />
         <Avatar 
           name={user?.name || ""}
