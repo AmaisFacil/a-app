@@ -15,3 +15,10 @@ export const Content = styled.View`
     padding: 5%;
     flex: 1;
     `
+
+export const ButtonContainer = styled.View`
+    justify-content: center;
+    flex-direction: column;
+    margin: ${vh(5)} 0;
+    align-items: center;
+    `
