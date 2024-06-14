@@ -40,11 +40,7 @@ const Home = () => {
     {
       icon: 'plus-circle',
       route: 'Create'
-    },
-    {
-      icon: 'settings',
-      route: 'Settings'
-    },
+    }
   ]
 
   return (

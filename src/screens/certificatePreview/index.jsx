@@ -16,6 +16,7 @@ const CertificatePreview = ({route}) => {
   const handleDownload = async () => {
     setStatus('loading');
     var response = await getDocument(certificate.fileId);
+    console.log(response)
     setStatus('');
   }
 
