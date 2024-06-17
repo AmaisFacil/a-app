@@ -1,6 +1,7 @@
 import * as FileSystem from 'expo-file-system';
 
-export const save = async (videoUri) => {
+
+const save = async (videoUri) => {
   try {
     const videoName = videoUri.split('/').pop();
     const newVideoUri = `${FileSystem.documentDirectory}${videoName}`;
@@ -16,7 +17,7 @@ export const save = async (videoUri) => {
   }
 };
 
-export const remove = async (videoUri) => {
+const remove = async (videoUri) => {
   try {
     await FileSystem.deleteAsync(videoUri, { idempotent: true });
   } catch (error) {
@@ -24,7 +25,7 @@ export const remove = async (videoUri) => {
   }
 };
 
-export const get = async (videoUri) => {
+const get = async (videoUri) => {
   try {
     const videoInfo = await FileSystem.getInfoAsync(videoUri);
     return videoInfo;
@@ -32,3 +33,6 @@ export const get = async (videoUri) => {
     return { error: error.message };
   }
 };
+
+
+export default { save, get, remove }

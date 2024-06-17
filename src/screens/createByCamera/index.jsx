@@ -1,27 +1,31 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
-import Feather from 'react-native-vector-icons/Feather';
 import { Camera, CameraType } from 'expo-camera';
 
-import { Container, Content, ButtonContainer, Button, LoadingContainer, IconText } from './styles';
+import { Container, Content, ButtonContainer } from './styles';
+import Description from '../../components/description';
 import Backnav from '../../components/backnav';
+import Button from '../../components/button';
+import file from '../../utils/file'; 
 
 const CreateByCamera = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [videoUri, setVideoUri] = useState(null);
+  const [error, setError] = useState(null);
   const cameraRef = useRef(null);
 
   useEffect(() => {
     (async () => {
       try {
         const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
+        if (!(cameraStatus === 'granted')) setError('Sem permissão para acessar a câmera ou áudio');
         const { status: audioStatus } = await Camera.requestMicrophonePermissionsAsync();
+        if (!(audioStatus === 'granted')) setError('Sem permissão para acessar a câmera ou áudio');
         setHasPermission(cameraStatus === 'granted' && audioStatus === 'granted');
       } catch (error) {
-        console.error('Falha ao obter permissões:', error);
+        setError('Sem permissão para acessar a câmera ou áudio')
         setHasPermission(false);
       }
     })();
@@ -33,9 +37,9 @@ const CreateByCamera = () => {
         setRecording(true);
         setIsProcessing(true);
         const video = await cameraRef.current.recordAsync();
-        setVideoUri(video.uri);
+        handleSave(video.uri);
       } catch (error) {
-        console.error('Erro ao gravar:', error);
+        setError('Ouve um erro executar a gravação');
       } finally {
         setRecording(false);
         setIsProcessing(false);
@@ -49,6 +53,14 @@ const CreateByCamera = () => {
     }
   }, [recording]);
 
+  const handleSave = async (uri) => {
+      const savedVideoUri = await file.save(uri);
+      console.log(uri, savedVideoUri)
+      if (savedVideoUri.error) return setError('Ouve um erro ao salvar o video');
+        console.log(`Vídeo salvo em: ${savedVideoUri}`);
+   
+  }
+
   const onCameraReady = useCallback(() => {
     setCameraReady(true);
   }, []);
@@ -56,46 +68,35 @@ const CreateByCamera = () => {
   if (hasPermission === null) {
     return <View />;
   }
-  if (hasPermission === false) {
-    return <Text>Sem permissão para acessar a câmera ou áudio</Text>;
-  }
 
   return (
     <Container>
       <Backnav text='Criar pela câmera' />
-      <Content>
-        <Camera
-          ref={cameraRef}
-          style={{ flex: 1, width: '100%' }}
-          type={CameraType.back}
-          onCameraReady={onCameraReady}
-        >
-          {isProcessing && (
-            <LoadingContainer>
-              <ActivityIndicator size="large" color="#ffffff" />
-            </LoadingContainer>
-          )}
-          <ButtonContainer>
-            {(!recording && !videoUri) ? (
-              <Button onPress={handleRecord} disabled={isProcessing}>
-                <Feather name="video" size={30} color="white" />
-                <IconText>Gravar</IconText>
-              </Button>
-            ): null}
-            {recording && (
-              <Button onPress={handleStopRecording}>
-                <Feather name="stop-circle" size={50} color="white" />
-              </Button>
-            )}
-            {(!recording && videoUri) ? (
-              <Button onPress={() => alert('Gravação finalizada')} disabled={isProcessing}>
-                <Feather name="save" size={30} color="white" />
-                <IconText>Salvar</IconText>
-              </Button>
-            ): null}
-          </ButtonContainer>
-        </Camera>
-      </Content>
+      {
+        error ? (
+          <Content> 
+            <Description text={error}/>
+          </Content>
+        ) : (
+          <Content>
+            <Camera
+              ref={cameraRef}
+              style={{ flex: 1, width: '100%' }}
+              type={CameraType.back}
+              onCameraReady={onCameraReady}
+            >
+              <ButtonContainer>
+                {(!recording) && (
+                  <Button onPress={handleRecord} text='Gravar' icon='video'/>
+                )}
+                {recording && (
+                  <Button onPress={handleStopRecording} text='Finalizar' icon='stop-circle'/>
+                )}
+              </ButtonContainer>
+            </Camera>
+          </Content>
+        ) 
+      }
     </Container>
   );
 };
