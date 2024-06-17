@@ -19,7 +19,7 @@ export const Container = styled.View`
     }}
 
     padding: 15px ${({padding}) => padding ? padding : '5%'};
-    height: ${({height}) => height ? vh(height) : vh(7)};
+    height: ${({height}) => height ? vh(height) : vh(10)};
     width: ${({width}) => width ? vw(width) : vw(100)};
     margin: ${({margin}) => margin ? margin : '0'};
     justify-content: space-between;
