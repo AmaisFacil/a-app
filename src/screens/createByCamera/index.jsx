@@ -1,19 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import { Camera } from 'expo-camera';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Text, View, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
+import { Camera, CameraType } from 'expo-camera';
+import Feather from 'react-native-vector-icons/Feather';
 import Backnav from '../../components/backnav';
-import { Container, Content, ButtonContainer, Button, VideoPreview } from './styles';
+import { Container, Content, ButtonContainer, Button } from './styles';
 
 const CreateByCamera = () => {
-  const { navigate } = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [recording, setRecording] = useState(false);
-  const [recorded, setRecorded] = useState(false);
   const [videoUri, setVideoUri] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -21,63 +18,39 @@ const CreateByCamera = () => {
       try {
         const { status: cameraStatus } = await Camera.requestCameraPermissionsAsync();
         const { status: audioStatus } = await Camera.requestMicrophonePermissionsAsync();
-
         setHasPermission(cameraStatus === 'granted' && audioStatus === 'granted');
       } catch (error) {
-        console.error('Failed to get permissions:', error);
+        console.error('Falha ao obter permissões:', error);
         setHasPermission(false);
       }
     })();
   }, []);
 
-  const handleRecord = async () => {
-    if (cameraRef.current && cameraReady) {
+  const handleRecord = useCallback(async () => {
+    if (cameraRef.current && cameraReady && !recording && !isProcessing) {
       try {
-        console.log('Starting recording...');
         setRecording(true);
-        const video = await cameraRef.current.recordAsync({
-          quality: Camera.Constants.VideoQuality['720p'],
-          maxDuration: 60,
-        });
-        console.log('Recording complete', video.uri);
+        setIsProcessing(true);
+        const video = await cameraRef.current.recordAsync();
         setVideoUri(video.uri);
-        setRecording(false);
-        setRecorded(true);
       } catch (error) {
-        console.error('Recording error:', error);
+        console.error('Erro ao gravar:', error);
+      } finally {
         setRecording(false);
+        setIsProcessing(false);
       }
-    } else {
-      console.warn('Camera not ready or not available');
     }
-  };
+  }, [cameraReady, recording, isProcessing]);
 
-  const handleStopRecording = () => {
+  const handleStopRecording = useCallback(() => {
     if (cameraRef.current && recording) {
-      console.log('Stopping recording...');
       cameraRef.current.stopRecording();
-      setRecording(false);
     }
-  };
+  }, [recording]);
 
-  const handleDelete = () => {
-    setRecorded(false);
-    setVideoUri(null);
-    // Delete video logic if needed
-  };
-
-  const handleSave = () => {
-    // Implement save logic here
-    console.log('Vídeo salvo:', videoUri);
-    setRecorded(false);
-    setVideoUri(null);
-    navigate('Home'); // or the desired screen
-  };
-
-  const onCameraReady = () => {
-    console.log('Camera is ready');
+  const onCameraReady = useCallback(() => {
     setCameraReady(true);
-  };
+  }, []);
 
   if (hasPermission === null) {
     return <View />;
@@ -93,44 +66,31 @@ const CreateByCamera = () => {
         <Camera
           ref={cameraRef}
           style={{ flex: 1, width: '100%' }}
-          type={Camera.Constants.Type.back}
-          ratio={'16:9'}
+          type={CameraType.back}
           onCameraReady={onCameraReady}
         >
-          {videoUri && !recording ? (
-            <VideoPreview
-              source={{ uri: videoUri }}
-              style={{ flex: 1, width: '100%' }}
-              resizeMode="contain"
-              shouldPlay
-              isLooping
-            />
-          ) : null}
-
+          {isProcessing && (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#ffffff" />
+            </View>
+          )}
           <ButtonContainer>
-            {!recording && !recorded && (
-              <Button onPress={handleRecord}>
-                <Ionicons name="camera" size={30} color="white" />
+            {(!recording && !videoUri) && (
+              <Button onPress={handleRecord} disabled={isProcessing}>
+                <Feather name="video" size={30} color="white" />
                 <Text style={{ color: 'white' }}>Gravar</Text>
               </Button>
             )}
             {recording && (
               <Button onPress={handleStopRecording}>
-                <Ionicons name="stop" size={30} color="white" />
-                <Text style={{ color: 'white' }}>Parar</Text>
+                <Feather name="stop-circle" size={50} color="red" />
               </Button>
             )}
-            {!recording && recorded && (
-              <>
-                <Button onPress={handleDelete}>
-                  <Ionicons name="trash" size={30} color="white" />
-                  <Text style={{ color: 'white' }}>Apagar</Text>
-                </Button>
-                <Button onPress={handleSave}>
-                  <Ionicons name="save" size={30} color="white" />
-                  <Text style={{ color: 'white' }}>Salvar</Text>
-                </Button>
-              </>
+            {(!recording && videoUri) && (
+              <Button onPress={() => alert('Gravação finalizada')} disabled={isProcessing}>
+                <Feather name="save" size={30} color="white" />
+                <Text style={{ color: 'white' }}>Finalizar</Text>
+              </Button>
             )}
           </ButtonContainer>
         </Camera>
@@ -138,5 +98,13 @@ const CreateByCamera = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default CreateByCamera;
