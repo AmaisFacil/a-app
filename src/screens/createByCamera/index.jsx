@@ -1,16 +1,17 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Text, View, ActivityIndicator, TouchableOpacity, StyleSheet } from 'react-native';
-import { Camera, CameraType } from 'expo-camera';
+import { Text, View, ActivityIndicator } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { Camera, CameraType } from 'expo-camera';
+
+import { Container, Content, ButtonContainer, Button, LoadingContainer, IconText } from './styles';
 import Backnav from '../../components/backnav';
-import { Container, Content, ButtonContainer, Button } from './styles';
 
 const CreateByCamera = () => {
   const [hasPermission, setHasPermission] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [cameraReady, setCameraReady] = useState(false);
   const [recording, setRecording] = useState(false);
   const [videoUri, setVideoUri] = useState(null);
-  const [cameraReady, setCameraReady] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
   const cameraRef = useRef(null);
 
   useEffect(() => {
@@ -70,41 +71,33 @@ const CreateByCamera = () => {
           onCameraReady={onCameraReady}
         >
           {isProcessing && (
-            <View style={styles.loadingContainer}>
+            <LoadingContainer>
               <ActivityIndicator size="large" color="#ffffff" />
-            </View>
+            </LoadingContainer>
           )}
           <ButtonContainer>
-            {(!recording && !videoUri) && (
+            {(!recording && !videoUri) ? (
               <Button onPress={handleRecord} disabled={isProcessing}>
                 <Feather name="video" size={30} color="white" />
-                <Text style={{ color: 'white' }}>Gravar</Text>
+                <IconText>Gravar</IconText>
               </Button>
-            )}
+            ): null}
             {recording && (
               <Button onPress={handleStopRecording}>
-                <Feather name="stop-circle" size={50} color="red" />
+                <Feather name="stop-circle" size={50} color="white" />
               </Button>
             )}
-            {(!recording && videoUri) && (
+            {(!recording && videoUri) ? (
               <Button onPress={() => alert('Gravação finalizada')} disabled={isProcessing}>
                 <Feather name="save" size={30} color="white" />
-                <Text style={{ color: 'white' }}>Finalizar</Text>
+                <IconText>Salvar</IconText>
               </Button>
-            )}
+            ): null}
           </ButtonContainer>
         </Camera>
       </Content>
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default CreateByCamera;
