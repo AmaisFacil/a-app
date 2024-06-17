@@ -3,14 +3,16 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
 
 import userReducer from "../reducers/user";
+import recordReducer from "../reducers/record";
 
 const rootReducer = combineReducers({
-  user: userReducer
+  user: userReducer,
+  record: recordReducer
 });
 
 const persistConfig = {
     storage: AsyncStorage,
-    whitelist: ["user"],
+    whitelist: ["user", "record"],
     key: "root",
 };
 
