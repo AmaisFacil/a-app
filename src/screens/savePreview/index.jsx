@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import React, { useState } from 'react';
-import { Video } from 'expo-av';
+//import { Video } from 'expo-av';
 
 import { Container, Content, VideoContainer } from './styles';
 import { removeLocalRecord } from '../../actions/localRecord';
@@ -62,14 +62,7 @@ const SavePreview = ({ route }) => {
       <Backnav text='Visualizar Video Salvo'/>
       <Content>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <VideoContainer>
-            <Video
-              source={{ uri: save.uri }}
-              useNativeControls
-              resizeMode="contain"
-              style={{ width: '100%', height: 200 }} 
-            />
-          </VideoContainer>
+
           <Input placeholder='nome do certificado' value={form.name} onChangeText={(x) => setForm({...form, name: x})} margin="10px 0" width={90}/>
           <Input placeholder='descrição do certificado' value={form.details} onChangeText={(x) => setForm({...form, details: x})}  margin="1px 0" width={90}/>
           <Button width={90} text='gerar certificado' icon='file-plus' margin='10px 0' loading={status == 'loading'} onPress={handleCreateWebprove}/>
@@ -81,4 +74,15 @@ const SavePreview = ({ route }) => {
 
 export default SavePreview;
 
-//          <Button width={90} text='apagar' icon='trash' margin='10px 0' loading={status == 'loading'} variant='error' onPress={handleDeleteWebprove}/>
+/*
+<Button width={90} text='apagar' icon='trash' margin='10px 0' loading={status == 'loading'} variant='error' onPress={handleDeleteWebprove}/>
+        
+<VideoContainer>
+  <Video
+    source={{ uri: save.uri }}
+    useNativeControls
+    resizeMode="contain"
+    style={{ width: '100%', height: 200 }} 
+  />
+</VideoContainer>
+ */
