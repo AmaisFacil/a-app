@@ -1,29 +1,54 @@
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { useDispatch } from 'react-redux';
 import React, { useState } from 'react';
 import { Video } from 'expo-av';
 
 import { Container, Content, VideoContainer } from './styles';
 import { removeLocalRecord } from '../../actions/localRecord';
-import { getDocument } from '../../actions/certificate';
-import Description from '../../components/description';
+import { createWebprove } from '../../actions/webprove';
+import generateHash from '../../utils/generateHash';
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
-import Title from '../../components/title';
+import Input from '../../components/input';
 
 const SavePreview = ({ route }) => {
+  const [form, setForm] = useState({details: "", name:""});
   const [status, setStatus] = useState("");
   const { save } = route.params;
   
+  const user = useSelector((state) => state.user);
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
 
   const handleCreateWebprove = async () => {
     setStatus('loading');
-
+    const hash = await generateHash(save.uri);
+    const data = {
+      transactions: [{transaction: false},{transaction: false}],
+      timestamp: new Date().toUTCString(Date.now()), 
+      pinataTimestamp: Date.now(), 
+      hash,
+      app: null,
+      email: user.email, 
+      name: user.name, 
+      size: null,
+      cid: hash, 
+      form: {
+        ...form,
+        cpf: user.cpf,
+        urls: "",
+        start: null,
+        stop: null, 
+        duraction:  null
+      }, 
+      pinata:{}, 
+      link:"", 
+    }
+    await createWebprove(data);
+    await removeLocalRecord(dispatch, save.uri)
     setStatus('');
-    navigate('Saves')
+    navigate('Webproves')
   };
   const handleDeleteWebprove = async () => {
     setStatus('loading');
@@ -45,10 +70,9 @@ const SavePreview = ({ route }) => {
               style={{ width: '100%', height: 200 }} 
             />
           </VideoContainer>
-          <Title text="Nome" size={20}/>
-          <Description text={save.name || "sem nome."}/>
+          <Input placeholder='nome do certificado' value={form.name} onChangeText={(x) => setForm({...form, name: x})} margin="10px 0" width={90}/>
+          <Input placeholder='descrição do certificado' value={form.details} onChangeText={(x) => setForm({...form, details: x})}  margin="1px 0" width={90}/>
           <Button width={90} text='gerar certificado' icon='file-plus' margin='10px 0' loading={status == 'loading'} onPress={handleCreateWebprove}/>
-          <Button width={90} text='apagar' icon='trash' margin='10px 0' loading={status == 'loading'} variant='error' onPress={handleDeleteWebprove}/>
         </ScrollView>
       </Content>
     </Container>
@@ -56,3 +80,5 @@ const SavePreview = ({ route }) => {
 };
 
 export default SavePreview;
+
+//          <Button width={90} text='apagar' icon='trash' margin='10px 0' loading={status == 'loading'} variant='error' onPress={handleDeleteWebprove}/>
