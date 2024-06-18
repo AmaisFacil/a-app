@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Camera, CameraType } from 'expo-camera';
+import { useDispatch } from 'react-redux';
 
 import { Container, Content, ButtonContainer } from './styles';
+import { addLocalRecord } from '../../actions/localRecord';
 import Description from '../../components/description';
+import formatDate from '../../utils/formatDate'; 
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
 import file from '../../utils/file'; 
@@ -14,7 +17,10 @@ const CreateByCamera = () => {
   const [cameraReady, setCameraReady] = useState(false);
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState(null);
+  
+  const { navigate } = useNavigation();
   const cameraRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -55,9 +61,14 @@ const CreateByCamera = () => {
 
   const handleSave = async (uri) => {
       const savedVideoUri = await file.save(uri);
-      console.log(uri, savedVideoUri)
       if (savedVideoUri.error) return setError('Ouve um erro ao salvar o video');
-        console.log(`Vídeo salvo em: ${savedVideoUri}`);
+      const record = {
+        name: formatDate(Date.now()),
+        uri: savedVideoUri,
+        date: Date.now(),
+      }
+      await addLocalRecord(dispatch, record);
+      navigate('Home');
    
   }
 
@@ -66,7 +77,7 @@ const CreateByCamera = () => {
   }, []);
 
   if (hasPermission === null) {
-    return <View />;
+    return null;
   }
 
   return (

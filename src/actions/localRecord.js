@@ -10,18 +10,18 @@ const getLocalRecords = async () => {
 
 const removeLocalRecord = async (dispatch, uri) => {
   try {
-    dispatch(removeLocalRecord(uri))
+    dispatch(removeRecord(uri))
   } catch (error) {
     return { error: error?.response?.data?.msg };
   }
 };
 const addLocalRecord = async (dispatch, record) => {
   try {
-    dispatch(addLocalRecord(record))
+    dispatch(addRecord(record))
   } catch (error) {
     return { error: error?.response?.data?.msg };
   }
 };
 
 
-export { getLocalRecords, addLocalRecord, removeLocalRecord };
+export  { getLocalRecords, addLocalRecord, removeLocalRecord };

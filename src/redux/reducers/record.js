@@ -1,18 +1,18 @@
-import { ADD_RECORD, REMOVE_RECORD, GET_RECORDS } from '../constants/actionTypes.js.js';
+import { ADD_RECORD, REMOVE_RECORD, GET_RECORDS } from '../constants/actionTypes.js';
 
-const initialState = {
-  records: []
-};
+const initialState = [];
 
 const recordReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case REMOVE_RECORD:
-      return {records: state.records.filter(x => x != action.payload.uri)};
-    case ADD_RECORD:
-      return { records: [...state.records, action.payload]};
-    case GET_RECORDS:
-      return state.records;
-  }
+    switch (action.type) {
+        case REMOVE_RECORD:
+            return state.filter(x => x != action.payload.uri);
+        case ADD_RECORD:
+            return [...state, action.payload];
+        case GET_RECORDS:
+            return state;
+        default:
+            return state; 
+    }
 };
 
 export default recordReducer;
