@@ -63,7 +63,7 @@ const CreateByCamera = () => {
       const savedVideoUri = await file.save(uri);
       if (savedVideoUri.error) return setError('Ouve um erro ao salvar o video');
       const record = {
-        name: formatDate(Date.now()),
+        name: formatDate(Date.now(), true),
         uri: savedVideoUri,
         date: Date.now(),
       }
