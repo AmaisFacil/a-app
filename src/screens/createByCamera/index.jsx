@@ -68,7 +68,7 @@ const CreateByCamera = () => {
         date: Date.now(),
       }
       await addLocalRecord(dispatch, record);
-      navigate('Home');
+      navigate('Saves');
    
   }
 
