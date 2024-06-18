@@ -21,8 +21,7 @@ const SavePreview = ({ route }) => {
 
   const handleCreateWebprove = async () => {
     setStatus('loading');
-    var response = await getDocument(save.fileId);
-    console.log(response);
+
     setStatus('');
     navigate('Saves')
   };
