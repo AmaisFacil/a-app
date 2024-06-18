@@ -10,6 +10,7 @@ import CreateByCamera from '../screens/createByCamera';
 import Certificates from '../screens/certificates';
 import InitialPage from '../screens/initialPage';
 import ProfileEdit from '../screens/profileEdit';
+import SavePreview from '../screens/savePreview';
 import Webproves from '../screens/webproves';
 import Historic from '../screens/historic';
 import Profile from '../screens/Profile';
@@ -20,7 +21,7 @@ import Saves from '../screens/saves';
 import Home from '../screens/home';
 
 
-const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates, CertificatePreview, Create, CreateByCamera, Saves]
+const routes = [ InitialPage, SignIn, SignUp, Home, Profile, ProfileEdit, Historic, HistoricPreview, Webproves, WebprovePreview, Certificates, CertificatePreview, Create, CreateByCamera, Saves, SavePreview]
 const Stack = createNativeStackNavigator();
 
 const Router = ({}) => {

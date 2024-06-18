@@ -1,16 +1,21 @@
+// styles.js
 import styled from "styled-components";
 import Constants from 'expo-constants';
 
-import useViewportUnits from '../../hooks/useViewport';
-const {vh, vw} = useViewportUnits();
-
 export const Container = styled.View`
-    background-color: ${({theme}) => theme.colors.background};
-    margin-top: ${Constants.statusBarHeight}px;
-    flex: 1;
-    `
+  background-color: ${({ theme }) => theme.colors.background};
+  margin-top: ${Constants.statusBarHeight}px;
+  flex: 1;
+`;
 
 export const Content = styled.View`
-    padding: 5%;
-    flex: 1;
-    `
+  padding: 5%;
+  flex: 1;
+`;
+
+export const VideoContainer = styled.View`
+  width: 100%;
+  height: 200px;
+  margin: 10px 0;
+  background-color: #000;
+`;
