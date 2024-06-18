@@ -19,4 +19,14 @@ const getDocument = async (fileId) => {
   }
 };
 
-export { getWebproves, getDocument };
+const createWebprove = async (documentdata) => {
+  try {
+    const response = await api.post('/webprove/create-webprove', documentdata);
+    const data = response.data;
+    return data;
+  } catch (error) {
+    return { error: error?.response?.data?.msg };
+  }
+};
+
+export { getWebproves, getDocument, createWebprove };
