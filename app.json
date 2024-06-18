@@ -21,7 +21,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.amaisfacil.amaisapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +39,15 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera1."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5e3091ca-f071-4513-85d4-41e15f4bf72e"
+      }
+    },
+    "owner": "amaisfacil"
   }
 }
