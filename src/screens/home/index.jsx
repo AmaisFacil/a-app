@@ -12,6 +12,7 @@ import Button from '../../components/button';
 import Title from '../../components/title';
 import Plain from '../../components/plain';
 import { getConfig } from '../../actions/config';
+import Description from '../../components/description';
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -96,6 +97,7 @@ useEffect(() => {
                 ))
               }
         </PlainsContainer>
+        <Description text={'© 2024 Agencia A+ Fácil - Todos os direitos reservados.'} align={'center'}/>
       </Content>
       </ScrollView>
     </Container>
