@@ -10,5 +10,5 @@ export const Container = styled.View`
     height: ${vh(30)};
     margin: 10px 0;
     padding: 2.5%;
-    width: 80%;
+    width: 100%;
 `;
