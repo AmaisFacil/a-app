@@ -15,6 +15,7 @@ const WebprovePreview = ({route}) => {
 
   const handleDownload = async () => {
     setStatus('loading');
+    console.log(webprove)
     var response = await getDocument(webprove.fileId);
     setStatus('');
   }
@@ -48,11 +49,11 @@ const WebprovePreview = ({route}) => {
           <Description text={`${webprove.form.duraction}`}/>
           <Title text="CPF/CNPJ" size={20}/>
           <Description text={`${webprove.form.cpf}`}/>
-          <Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
         </ScrollView>
       </Content>
     </Container>
   );
 };
+//<Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
 
 export default WebprovePreview;

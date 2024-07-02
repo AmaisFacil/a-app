@@ -15,8 +15,7 @@ const CertificatePreview = ({route}) => {
 
   const handleDownload = async () => {
     setStatus('loading');
-    var response = await getDocument(certificate.fileId);
-    console.log(response)
+    var response = await getDocument(certificate.document.id);
     setStatus('');
   }
 
@@ -29,7 +28,7 @@ const CertificatePreview = ({route}) => {
           <Description text={certificate.title || "sem nome."}/>
           <Title text="Tipo" size={20}/>
           <Description text={certificate.type || "sem tipo."}/>
-          <Title text="Dta de registro" size={20}/>
+          <Title text="Data de registro" size={20}/>
           <Description text={formatDate(certificate.date, true)}/>
           <Title text="Descrição" size={20}/>
           <Description text={certificate.description || "sem descrição."}/>
@@ -49,11 +48,11 @@ const CertificatePreview = ({route}) => {
           <Description text={certificate.file.hash}/>
           <Title text="Identificador do arquivo" size={20}/>
           <Description text={certificate.document.id}/>
-          <Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
         </ScrollView>
       </Content>
     </Container>
   );
 };
+//<Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
 
 export default CertificatePreview;
