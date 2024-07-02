@@ -5,11 +5,12 @@ import { useTheme } from 'styled-components';
 import { ScrollView } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { CategoryTitle, Container, Content, Navbar, ServiceButton, ServiceContainer } from './styles';
+import { CategoryTitle, Container, Content, Navbar, PlainsContainer, ServiceButton, ServiceContainer } from './styles';
 import BannerCarousel from '../../components/bannersCarousel';
 import Avatar from '../../components/avatar';
 import Button from '../../components/button';
 import Title from '../../components/title';
+import Plain from '../../components/plain';
 
 const Home = () => {
   const user = useSelector((state) => state.user);
@@ -58,6 +59,7 @@ const Home = () => {
           onPress={() => navigate('Profile')}
         />
       </Navbar>
+      <ScrollView showsVerticalScrollIndicator={false}>
       <Content>
         <BannerCarousel banners={banners} /> 
         <CategoryTitle>
@@ -77,8 +79,13 @@ const Home = () => {
         <CategoryTitle>
           <Title text='Nossos Planos' size={22}/>
         </CategoryTitle>
-
+        <PlainsContainer>
+              <Plain/>
+              <Plain/>
+              <Plain/>
+        </PlainsContainer>
       </Content>
+      </ScrollView>
     </Container>
   );
 };

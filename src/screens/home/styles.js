@@ -48,3 +48,8 @@ export const ServiceContainer = styled.View`
     justify-content: center;
     width: 100%;
 `   
+export const PlainsContainer = styled.View`
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+`   
