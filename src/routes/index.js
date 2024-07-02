@@ -13,7 +13,7 @@ import ProfileEdit from '../screens/profileEdit';
 import SavePreview from '../screens/savePreview';
 import Webproves from '../screens/webproves';
 import Historic from '../screens/historic';
-import Profile from '../screens/Profile';
+import Profile from '../screens/profile';
 import SignIn from '../screens/signIn';
 import SignUp from '../screens/signUp';
 import Create from '../screens/create';

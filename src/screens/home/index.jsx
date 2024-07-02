@@ -11,9 +11,11 @@ import Avatar from '../../components/avatar';
 import Button from '../../components/button';
 import Title from '../../components/title';
 import Plain from '../../components/plain';
+import { getConfig } from '../../actions/config';
 
 const Home = () => {
   const user = useSelector((state) => state.user);
+  const [config, setConfig] = useState(null);
   const { navigate } = useNavigation();
   const theme = useTheme();
 
@@ -42,7 +44,15 @@ const Home = () => {
       icon: 'plus-circle',
       route: 'Create'
     }
-  ]
+  ];
+
+useEffect(() => {
+  (async () => {
+    const response = await getConfig();
+    setConfig(JSON.parse(response.file));
+  })()
+},[])
+
 
   return (
     <Container>
@@ -80,9 +90,11 @@ const Home = () => {
           <Title text='Nossos Planos' size={22}/>
         </CategoryTitle>
         <PlainsContainer>
-              <Plain/>
-              <Plain/>
-              <Plain/>
+              {
+                config?.plains && config.plains.map((plain, index) => (
+                  <Plain plain={plain} key={index}/>
+                ))
+              }
         </PlainsContainer>
       </Content>
       </ScrollView>
