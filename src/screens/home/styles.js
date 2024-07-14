@@ -38,15 +38,23 @@ export const CategoryTitle = styled.View`
 export const ServiceButton = styled.TouchableOpacity`
     background-color: ${({theme}) => theme.colors.secondaryBackground};
     justify-content: center;
-    margin: 0 ${vw(2.5)};
-    border-radius: 50px;
     align-items: center;
-    width: ${vw(20)};
-    height: ${vw(20)};
+    border-radius: 5px;
+    min-height: ${vw(25)};
+    height: auto;
+    margin: ${vw(2)};
+    padding: 10px;
+    flex: 1;
 `
 export const ServiceContainer = styled.View`
     justify-content: center;
     width: 100%;
+`   
+export const ServiceText = styled.Text`
+    color: ${({theme}) => theme.colors.secondaryText};
+    margin-top: 10px 0;
+    font-size: 15px;
+
 `   
 export const PlainsContainer = styled.View`
     flex-direction: column;

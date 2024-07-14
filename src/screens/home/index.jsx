@@ -2,10 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
 import React, { useState, useEffect} from 'react';
 import { useTheme } from 'styled-components';
-import { ScrollView } from 'react-native';
+import { ScrollView, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 
-import { CategoryTitle, Container, Content, Navbar, PlainsContainer, ServiceButton, ServiceContainer } from './styles';
+import { CategoryTitle, Container, Content, Navbar, PlainsContainer, ServiceButton, ServiceContainer, ServiceText } from './styles';
 import BannerCarousel from '../../components/bannersCarousel';
 import Avatar from '../../components/avatar';
 import Button from '../../components/button';
@@ -30,29 +30,40 @@ const Home = () => {
 
   const services = [
     {
+      name: 'videos salvos',
       icon: 'save',
       route: 'Saves'
     },
     {
+      name: 'webproves',
       icon: 'play-circle',
       route: 'Webproves'
     },
     {
+      name: 'Certificados',
       icon: 'printer',
       route: 'Certificates'
     },
     {
+      name: 'Criar',
       icon: 'plus-circle',
       route: 'Create'
     }
   ];
 
-useEffect(() => {
-  (async () => {
-    const response = await getConfig();
-    setConfig(JSON.parse(response.file));
-  })()
-},[])
+  useEffect(() => {
+    (async () => {
+      const response = await getConfig();
+      setConfig(JSON.parse(response.file));
+    })()
+  },[])
+
+  const renderItem = ({ item }) => (
+    <ServiceButton onPress={() => navigate(item.route)}>
+      <Feather color={theme.colors.primary} size={30} name={item.icon}/>
+      <ServiceText>{item.name}</ServiceText>
+    </ServiceButton>
+  );
 
 
   return (
@@ -77,15 +88,12 @@ useEffect(() => {
           <Title text='Serviços' size={22}/>
         </CategoryTitle>
         <ServiceContainer>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}  contentContainerStyle={{justifyContent:'space-between', alignItems: 'center', flexDirection: 'row'}}>
-              {
-                services.map((item, index) => (
-                  <ServiceButton onPress={() => navigate(item.route)} key={index}>
-                      <Feather size={30} name={item.icon} color={theme.colors.primary} />
-                  </ServiceButton>
-                ))
-              }
-          </ScrollView>
+          <FlatList
+            keyExtractor={(item) => item.route}
+            renderItem={renderItem}
+            data={services}
+            numColumns={2}
+          />
         </ServiceContainer>
         <CategoryTitle>
           <Title text='Nossos Planos' size={22}/>
