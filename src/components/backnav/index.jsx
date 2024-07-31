@@ -5,8 +5,8 @@ import React from "react";
 
 import { Container, Text, IconButton } from "./styles";
 
-const Backnav = ({text, variant, margin, width, height, padding}) => {
-    const { goBack } = useNavigation();
+const Backnav = ({text, variant, margin, width, height, padding, backToHome }) => {
+    const { goBack, navigate } = useNavigation();
     const theme = useTheme();
 
     const getIconColor = () => {
@@ -18,9 +18,11 @@ const Backnav = ({text, variant, margin, width, height, padding}) => {
       }
     };
 
+    const handleBackToHome = () => navigate('Home');
+
     return (
         <Container variant={variant} margin={margin} width={width} height={height} padding={padding}>       
-            <IconButton onPress={goBack}>
+            <IconButton onPress={ backToHome ? handleBackToHome : goBack }>
                 <Feather name="arrow-left" color={getIconColor()} size={30} />
             </IconButton>
             <Text variant={variant}>
