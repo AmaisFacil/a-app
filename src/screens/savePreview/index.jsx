@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { Video } from 'expo-av';
+//import { Video } from 'expo-av';
 
 import { removeLocalRecord } from '../../actions/localRecord';
 import { createWebprove } from '../../actions/webprove';
@@ -25,6 +25,7 @@ const SavePreview = ({ route }) => {
 
   useEffect(() => {
     const getVideoInfo = async () => {
+      /*
       if (videoRef.current) {
         const status = await videoRef.current.getStatusAsync();
         setVideoInfo({
@@ -32,11 +33,13 @@ const SavePreview = ({ route }) => {
           size: null 
         });
       }
+        */
     };
     getVideoInfo();
   }, [save.uri]);
 
   const handleCreateWebprove = async () => {
+    /*
     setStatus('loading');
     const hash = await generateHash(save.uri);
     const data = {
@@ -65,6 +68,7 @@ const SavePreview = ({ route }) => {
     await removeLocalRecord(dispatch, save.uri);
     setStatus('');
     navigate('Webproves');
+    */
   };
 
   const handleDeleteWebprove = async () => {
@@ -73,13 +77,8 @@ const SavePreview = ({ route }) => {
     setStatus('');
     navigate('Saves');
   };
-
-  return (
-    <Container>
-      <Backnav text='Visualizar Video Salvo'/>
-      <Content>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Video
+  /*
+            <Video
             ref={videoRef}
             source={{ uri: save.uri }}
             onLoad={(status) => {
@@ -91,6 +90,11 @@ const SavePreview = ({ route }) => {
             style={{ width: '100%', height: 200 }} 
             useNativeControls
           />
+    <Container>
+      <Backnav text='Visualizar Video Salvo'/>
+      <Content>
+        <ScrollView showsVerticalScrollIndicator={false}>
+
           <Input 
             placeholder='Nome do certificado' 
             value={form.name} 
@@ -116,6 +120,10 @@ const SavePreview = ({ route }) => {
         </ScrollView>
       </Content>
     </Container>
+  */
+
+  return (
+    <></>
   );
 };
 
