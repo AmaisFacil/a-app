@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 
 import { Container, Content, Highlight, HighlightsContainer, HighlightText, ProfileInformations,  ProfileSection} from './styles';
 import InformationButton from '../../components/informationButton';
+import { getCertificates } from '../../actions/certificate';
 import Description from '../../components/description';
+import { getWebproves } from '../../actions/webprove';
 import Backnav from '../../components/backnav';
 import Avatar from '../../components/avatar';
 import Button from '../../components/button';
@@ -13,9 +15,11 @@ import { logout } from '../../actions/user';
 import Title from '../../components/title';
 
 const Profile = () => {
+  const [highlightcValues, setHighlightValues] = useState();
+  const localRecords = useSelector((state) => state.record);
   const user = useSelector((state) => state.user);
-  const [status, setStatus] = useState('');
   const { reset, navigate } = useNavigation();
+  const [status, setStatus] = useState('');
 
   const handleLogout = async () => {
     setStatus('loading');
@@ -25,7 +29,17 @@ const Profile = () => {
       index: 0, 
       routes: [{ name: 'InitialPage' }],
     })
-  }
+  };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const certificates = await getCertificates();
+        const webproves = await getWebproves();
+        setHighlightValues({ certificates: certificates.length, webproves: webproves.length, localRecords: localRecords.length });
+      } catch(e){}
+    })()
+  }, [])
 
   return (
     <Container>
@@ -41,19 +55,19 @@ const Profile = () => {
         <HighlightsContainer>
             <Highlight>
               <Description text='Creditos'/>
-              <HighlightText>0</HighlightText>
+              <HighlightText>{user?.credits || 0}</HighlightText>
             </Highlight>
             <Highlight>
               <Description text='Certificados'/>
-              <HighlightText>0</HighlightText>
+              <HighlightText>{highlightcValues?.certificates || 0}</HighlightText>
             </Highlight>
             <Highlight>
               <Description text='Webproves'/>
-              <HighlightText>0</HighlightText>
+              <HighlightText>{highlightcValues?.webproves || 0}</HighlightText>
             </Highlight>
             <Highlight>
               <Description text='Gravações'/>
-              <HighlightText>0</HighlightText>
+              <HighlightText>{highlightcValues?.localRecords || 0}</HighlightText>
             </Highlight>
 
         </HighlightsContainer>
