@@ -14,7 +14,7 @@ const Saves = () => {
 
   return (
     <Container>
-      <Backnav text='Videos Salvos' backToHome/>
+      <Backnav text='Videos Salvos' backToHome />
       <Content>
         <ScrollView showsVerticalScrollIndicator={false}>
 

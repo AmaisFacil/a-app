@@ -13,12 +13,16 @@ const WebprovePreview = ({route}) => {
   const { webprove } = route.params;
   const [status, setStatus] = useState("");
 
+  const getSecondsFromMs = (duration) => Math.floor((duration / 1000) % 60);
+
   const handleDownload = async () => {
     setStatus('loading');
     console.log(webprove)
     var response = await getDocument(webprove.fileId);
     setStatus('');
   }
+
+  console.log(webprove)
 
   return (
     <Container>
@@ -32,9 +36,9 @@ const WebprovePreview = ({route}) => {
           <Title text="Identificador" size={20}/>
           <Description text={webprove._id}/>
           <Title text="Localização" size={20}/>
-          <Description text={`${webprove.city}, ${webprove.region_code}, ${webprove.country_name}`}/>
+          <Description text={webprove.city ? `${webprove.city}, ${webprove.region_code}, ${webprove.country_name}` : "sem localização."}/>
           <Title text="IP" size={20}/>
-          <Description text={`${webprove.ip}`}/>
+          <Description text={webprove.ip ? `${webprove.ip}` : "sem IP."}/>
           <Title text="Hash" size={20}/>
           <Description text={`${webprove.hash}`}/>
           <Title text="Identificador do arquivo" size={20}/>
@@ -46,7 +50,7 @@ const WebprovePreview = ({route}) => {
           <Title text="Fim da gravação" size={20}/>
           <Description text={`${formatDate(webprove.form.stop, true)}`}/>
           <Title text="Duração" size={20}/>
-          <Description text={`${webprove.form.duraction}`}/>
+          <Description text={`${getSecondsFromMs(webprove.form.duraction) || 0} segundos`}/>
           <Title text="CPF/CNPJ" size={20}/>
           <Description text={`${webprove.form.cpf}`}/>
         </ScrollView>

@@ -2,8 +2,7 @@ import axios from "axios";
 import storage from "./storage";
 
 const api = axios.create({
-  baseURL: false ? "https://api.agenciamaisfacil.com.br:9090/v2" : "https://a-api.onrender.com/v2",
-});
+  baseURL: false ? "https://api.agenciamaisfacil.com.br:9090/v2" : "https://a-api.onrender.com/v2",});
 export const setAuthorizationToken = async (newToken) => {
   if (newToken) {
     api.defaults.headers["x-auth-token"] = newToken;

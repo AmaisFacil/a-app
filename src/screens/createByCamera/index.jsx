@@ -82,7 +82,7 @@ const CreateByCamera = () => {
 
   return (
     <Container>
-      <Backnav text='Criar pela câmera' backToHome/>
+      <Backnav text='Criar pela câmera' backToHome />
       {
         error ? (
           <Content> 
