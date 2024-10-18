@@ -76,7 +76,7 @@ const SavePreview = ({ route }) => {
 
   return (
     <Container>
-      <Backnav text='Visualizar Video Salvo'/>
+      <Backnav text={'Visualizar Video Salvo'}/>
       <Content>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Video
@@ -105,14 +105,25 @@ const SavePreview = ({ route }) => {
             margin="1px 0" 
             width={90} 
           />
-          <Button 
-            width={90} 
-            text='Gerar certificado' 
-            icon='file-plus' 
-            margin='10px 0' 
-            loading={status === 'loading'} 
-            onPress={handleCreateWebprove} 
-          />
+          {
+            user.credits < 1  ? 
+              <Button 
+                width={90} 
+                text='Creditos insuficientes' 
+                icon='x-circle' 
+                variant='error'
+                margin='10px 0' 
+              />
+            :
+              <Button 
+                width={90} 
+                text='Gerar certificado' 
+                icon='file-plus' 
+                margin='10px 0' 
+                loading={status === 'loading'} 
+                onPress={handleCreateWebprove} 
+              />
+          }
         </ScrollView>
       </Content>
     </Container>
