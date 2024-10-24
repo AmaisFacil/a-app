@@ -12,6 +12,7 @@ import Button from '../../components/button';
 import file from '../../utils/file'; 
 
 const CreateByCamera = () => {
+  const [blinkingVariant, setBlinkingVariant] = useState('error');
   const [hasPermission, setHasPermission] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [cameraReady, setCameraReady] = useState(false);
@@ -31,7 +32,7 @@ const CreateByCamera = () => {
         if (!(audioStatus === 'granted')) setError('Sem permissão para acessar a câmera ou áudio');
         setHasPermission(cameraStatus === 'granted' && audioStatus === 'granted');
       } catch (error) {
-        setError('Sem permissão para acessar a câmera ou áudio')
+        setError('Sem permissão para acessar a câmera ou áudio');
         setHasPermission(false);
       }
     })();
@@ -60,20 +61,27 @@ const CreateByCamera = () => {
   }, [recording]);
 
   const handleSave = async (uri) => {
-      const savedVideoUri = await file.save(uri);
-      if (savedVideoUri.error) return setError('Ouve um erro ao salvar o video');
-      const record = {
-        name: formatDate(Date.now(), true),
-        uri: savedVideoUri,
-        date: Date.now(),
-      }
-      await addLocalRecord(dispatch, record);
-      navigate('Saves');
-   
-  }
+    const savedVideoUri = await file.save(uri);
+    if (savedVideoUri.error) return setError('Ouve um erro ao salvar o video');
+    const record = {
+      name: formatDate(Date.now(), true),
+      uri: savedVideoUri,
+      date: Date.now(),
+    };
+    await addLocalRecord(dispatch, record);
+    navigate('Saves');
+  };
 
   const onCameraReady = useCallback(() => {
     setCameraReady(true);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBlinkingVariant((prevVariant) => (prevVariant === 'error' ? null : 'error'));
+    }, 500);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (hasPermission === null) {
@@ -83,31 +91,32 @@ const CreateByCamera = () => {
   return (
     <Container>
       <Backnav text='Criar pela câmera' backToHome />
-      {
-        error ? (
-          <Content> 
-            <Description text={error}/>
-          </Content>
-        ) : (
-          <Content>
-            <Camera
-              ref={cameraRef}
-              style={{ flex: 1, width: '100%' }}
-              type={CameraType.back}
-              onCameraReady={onCameraReady}
-            >
-              <ButtonContainer>
-                {(!recording) && (
-                  <Button onPress={handleRecord} text='Gravar' icon='video'/>
-                )}
-                {recording && (
-                  <Button onPress={handleStopRecording} text='Finalizar' icon='stop-circle'/>
-                )}
-              </ButtonContainer>
-            </Camera>
-          </Content>
-        ) 
-      }
+      {error ? (
+        <Content>
+          <Description text={error} />
+        </Content>
+      ) : (
+        <Content>
+          <Camera
+            ref={cameraRef}
+            style={{ flex: 1, width: '100%' }}
+            type={CameraType.back}
+            onCameraReady={onCameraReady}
+          >
+            <ButtonContainer>
+              {!recording && <Button onPress={handleRecord} text='Gravar' icon='video' />}
+              {recording && (
+                <Button
+                  onPress={handleStopRecording}
+                  text='Finalizar'
+                  icon='stop-circle'
+                  variant={blinkingVariant}
+                />
+              )}
+            </ButtonContainer>
+          </Camera>
+        </Content>
+      )}
     </Container>
   );
 };
