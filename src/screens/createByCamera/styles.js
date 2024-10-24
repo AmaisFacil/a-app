@@ -17,7 +17,9 @@ export const Content = styled.View`
 export const ButtonContainer = styled.View`
   justify-content: space-around;
   background-color: transparent;
-  flex-direction: row;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   bottom: 30px;
   right: 0;

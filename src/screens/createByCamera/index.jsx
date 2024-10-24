@@ -9,6 +9,7 @@ import Description from '../../components/description';
 import formatDate from '../../utils/formatDate'; 
 import Backnav from '../../components/backnav';
 import Button from '../../components/button';
+import Title from '../../components/title';
 import file from '../../utils/file'; 
 
 const CreateByCamera = () => {
@@ -18,6 +19,7 @@ const CreateByCamera = () => {
   const [cameraReady, setCameraReady] = useState(false);
   const [recording, setRecording] = useState(false);
   const [error, setError] = useState(null);
+  const [recordTime, setRecordTime] = useState(0);
   
   const { navigate } = useNavigation();
   const cameraRef = useRef(null);
@@ -43,6 +45,7 @@ const CreateByCamera = () => {
       try {
         setRecording(true);
         setIsProcessing(true);
+        setRecordTime(0); 
         const video = await cameraRef.current.recordAsync();
         handleSave(video.uri);
       } catch (error) {
@@ -84,6 +87,24 @@ const CreateByCamera = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    let timer;
+    if (recording) {
+      timer = setInterval(() => {
+        setRecordTime((prevTime) => prevTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(timer);
+    }
+    return () => clearInterval(timer);
+  }, [recording]);
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+  };
+
   if (hasPermission === null) {
     return null;
   }
@@ -104,6 +125,7 @@ const CreateByCamera = () => {
             onCameraReady={onCameraReady}
           >
             <ButtonContainer>
+              {recording && <Title text={formatTime(recordTime)} />} 
               {!recording && <Button onPress={handleRecord} text='Gravar' icon='video' />}
               {recording && (
                 <Button
