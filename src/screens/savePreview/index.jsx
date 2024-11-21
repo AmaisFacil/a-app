@@ -118,7 +118,7 @@ const SavePreview = ({ route }) => {
             width={90} 
           />
           {
-            user.credits < 1  ? 
+            (user.credits < 1 && !(user.role == 'admin'))  ? 
               <Button 
                 width={90} 
                 text='Creditos insuficientes' 
@@ -129,7 +129,7 @@ const SavePreview = ({ route }) => {
             :
               <Button 
                 width={90} 
-                text='Gerar certificado' 
+                text={'Gerar certificado'}
                 icon='file-plus' 
                 margin='10px 0' 
                 loading={status === 'loading'} 
