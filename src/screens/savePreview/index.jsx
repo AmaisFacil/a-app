@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { Video } from 'expo-av';
 
+import getUserDeviceInfo from '../../utils/getUserDeviceInfo';
 import { removeLocalRecord } from '../../actions/localRecord';
 import { createWebprove } from '../../actions/webprove';
 import generateHash from '../../utils/generateHash';
+import getLocation from '../../utils/getLocation';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Button from '../../components/button';
@@ -39,12 +41,20 @@ const SavePreview = ({ route }) => {
   const handleCreateWebprove = async () => {
     setStatus('loading');
     const hash = await generateHash(save.uri);
+    const userDeviceInfo = await getUserDeviceInfo();
+    const location = await getLocation();
     const data = {
       transactions: [{ transaction: false }, { transaction: false }],
       timestamp: new Date().toUTCString(), 
       pinataTimestamp: Date.now(), 
       hash,
       app: null,
+      ip: userDeviceInfo.ip,
+      city: userDeviceInfo.city,
+      region_code: userDeviceInfo.region,
+      country_name: userDeviceInfo.country,
+      timezone: userDeviceInfo.timezone,
+      org: userDeviceInfo.org,
       email: user.email, 
       name: user.name, 
       size: videoInfo.size || 0,
@@ -59,9 +69,11 @@ const SavePreview = ({ route }) => {
       }, 
       pinata: {}, 
       link: "", 
+      ...location
     };
 
     await createWebprove(data);
+
     await removeLocalRecord(dispatch, save.uri);
     setStatus('');
     navigate('Webproves');
