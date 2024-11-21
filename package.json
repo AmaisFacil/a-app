@@ -20,6 +20,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.5",
     "expo": "~49.0.15",
+    "expo-av": "~13.4.1",
     "expo-camera": "~13.4.4",
     "expo-cli": "^6.3.10",
     "expo-constants": "~14.4.2",
@@ -43,7 +44,8 @@
     "redux-persist": "^6.0.0",
     "styled-components": "^6.1.8",
     "yarn": "^1.22.21",
-    "expo-av": "~13.4.1"
+    "expo-location": "~16.1.0",
+    "expo-sharing": "~11.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

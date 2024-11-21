@@ -13,6 +13,7 @@ import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Button from '../../components/button';
 import Input from '../../components/input';
+import file from '../../utils/file';
 
 const SavePreview = ({ route }) => {
   const [videoInfo, setVideoInfo] = useState({ duration: null, size: null });
@@ -39,7 +40,9 @@ const SavePreview = ({ route }) => {
   }, [save.uri]);
 
   const handleCreateWebprove = async () => {
+
     setStatus('loading');
+    await file.saveToDownloads(save.uri);
     const hash = await generateHash(save.uri);
     const userDeviceInfo = await getUserDeviceInfo();
     const location = await getLocation();
