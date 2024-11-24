@@ -15,6 +15,7 @@ import { Container, Content } from './styles';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import file from '../../utils/file';
+import formatDate from '../../utils/formatDate';
 
 const SavePreview = ({ route }) => {
   const [videoInfo, setVideoInfo] = useState({ duration: null, size: null });
@@ -54,6 +55,9 @@ const SavePreview = ({ route }) => {
       pinataTimestamp: Date.now(), 
       hash,
       app: null,
+      formatTimestamp: formatDate(new Date().toUTCString(), true),
+      formatStart: formatDate(save.date, true),
+      formatStop: formatDate(save.date + videoInfo.duration, true),
       ip: userDeviceInfo.ip,
       timezone: userDeviceInfo.timezone,
       org: userDeviceInfo.org,
