@@ -4,13 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { Video } from 'expo-av';
 
+import getLocationDetails from '../../utils/getLocationDetails';
+import getUserDeviceInfo from '../../utils/getUserDeviceInfo';
 import { removeLocalRecord } from '../../actions/localRecord';
 import { createWebprove } from '../../actions/webprove';
 import generateHash from '../../utils/generateHash';
+import getLocation from '../../utils/getLocation';
 import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Button from '../../components/button';
 import Input from '../../components/input';
+import file from '../../utils/file';
 
 const SavePreview = ({ route }) => {
   const [videoInfo, setVideoInfo] = useState({ duration: null, size: null });
@@ -37,14 +41,22 @@ const SavePreview = ({ route }) => {
   }, [save.uri]);
 
   const handleCreateWebprove = async () => {
+
     setStatus('loading');
+    await file.saveToDownloads(save.uri);
     const hash = await generateHash(save.uri);
+    const userDeviceInfo = await getUserDeviceInfo();
+    const location = await getLocation();
+    const locationDetails = await getLocationDetails(location.latitude, location.longitude);
     const data = {
       transactions: [{ transaction: false }, { transaction: false }],
       timestamp: new Date().toUTCString(), 
       pinataTimestamp: Date.now(), 
       hash,
       app: null,
+      ip: userDeviceInfo.ip,
+      timezone: userDeviceInfo.timezone,
+      org: userDeviceInfo.org,
       email: user.email, 
       name: user.name, 
       size: videoInfo.size || 0,
@@ -59,9 +71,12 @@ const SavePreview = ({ route }) => {
       }, 
       pinata: {}, 
       link: "", 
+      ...location,
+      ...locationDetails
     };
 
     await createWebprove(data);
+
     await removeLocalRecord(dispatch, save.uri);
     setStatus('');
     navigate('Webproves');
@@ -76,7 +91,7 @@ const SavePreview = ({ route }) => {
 
   return (
     <Container>
-      <Backnav text='Visualizar Video Salvo'/>
+      <Backnav text={'Visualizar Video Salvo'}/>
       <Content>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Video
@@ -105,14 +120,25 @@ const SavePreview = ({ route }) => {
             margin="1px 0" 
             width={90} 
           />
-          <Button 
-            width={90} 
-            text='Gerar certificado' 
-            icon='file-plus' 
-            margin='10px 0' 
-            loading={status === 'loading'} 
-            onPress={handleCreateWebprove} 
-          />
+          {
+            (user.credits < 1 && !(user.role == 'admin'))  ? 
+              <Button 
+                width={90} 
+                text='Creditos insuficientes' 
+                icon='x-circle' 
+                variant='error'
+                margin='10px 0' 
+              />
+            :
+              <Button 
+                width={90} 
+                text={'Gerar certificado'}
+                icon='file-plus' 
+                margin='10px 0' 
+                loading={status === 'loading'} 
+                onPress={handleCreateWebprove} 
+              />
+          }
         </ScrollView>
       </Content>
     </Container>

@@ -1,6 +1,26 @@
+import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
 
+const saveToDownloads = async (videoUri) => {
+  try {
+    const videoName = videoUri.split('/').pop();
+    const fileUri = `${FileSystem.documentDirectory}${videoName}`;
 
+    await FileSystem.moveAsync({
+      from: videoUri,
+      to: fileUri,
+    });
+
+    if (!(await Sharing.isAvailableAsync())) {
+      return { error: 'Sharing is not available on this device' };
+    }
+
+    await Sharing.shareAsync(fileUri);
+    return { success: true };
+  } catch (error) {
+    return { error: error.message };
+  }
+};
 const save = async (videoUri) => {
   try {
     const videoName = videoUri.split('/').pop();
@@ -35,4 +55,4 @@ const get = async (videoUri) => {
 };
 
 
-export default { save, get, remove }
+export default { save, get, remove, saveToDownloads }

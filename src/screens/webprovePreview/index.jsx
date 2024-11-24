@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { Linking, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 
 import Description from '../../components/description';
@@ -7,7 +7,6 @@ import Backnav from '../../components/backnav';
 import { Container, Content } from './styles';
 import Button from '../../components/button';
 import Title from '../../components/title';
-import { getDocument } from '../../actions/webprove';
 
 const WebprovePreview = ({route}) => {
   const { webprove } = route.params;
@@ -17,12 +16,10 @@ const WebprovePreview = ({route}) => {
 
   const handleDownload = async () => {
     setStatus('loading');
-    console.log(webprove)
-    var response = await getDocument(webprove.fileId);
+    const url = 'https://agenciamaisfacil.com.br/webprove/download/' + webprove._id;
+    Linking.openURL(url)
     setStatus('');
   }
-
-  console.log(webprove)
 
   return (
     <Container>
@@ -53,11 +50,11 @@ const WebprovePreview = ({route}) => {
           <Description text={`${getSecondsFromMs(webprove.form.duraction) || 0} segundos`}/>
           <Title text="CPF/CNPJ" size={20}/>
           <Description text={`${webprove.form.cpf}`}/>
+          <Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
         </ScrollView>
       </Content>
     </Container>
   );
 };
-//<Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
 
 export default WebprovePreview;

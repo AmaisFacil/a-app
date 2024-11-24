@@ -1,7 +1,6 @@
-import { ScrollView } from 'react-native';
+import { Linking, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 
-import { getDocument } from '../../actions/certificate';
 import Description from '../../components/description';
 import formatDate from '../../utils/formatDate';
 import Backnav from '../../components/backnav';
@@ -15,7 +14,8 @@ const CertificatePreview = ({route}) => {
 
   const handleDownload = async () => {
     setStatus('loading');
-    var response = await getDocument(certificate.document.id);
+    const url = 'https://agenciamaisfacil.com.br/record/download/' + certificate._id;
+    Linking.openURL(url)
     setStatus('');
   }
 
@@ -48,11 +48,11 @@ const CertificatePreview = ({route}) => {
           <Description text={certificate.file.hash}/>
           <Title text="Identificador do arquivo" size={20}/>
           <Description text={certificate.document.id}/>
+          <Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
         </ScrollView>
       </Content>
     </Container>
   );
 };
-//<Button width={90} text='download' icon='download' margin='25px 0' loading={status=='loading'} onPress={handleDownload}/>
 
 export default CertificatePreview;
