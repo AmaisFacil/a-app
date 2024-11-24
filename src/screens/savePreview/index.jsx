@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { Video } from 'expo-av';
 
+import getLocationDetails from '../../utils/getLocationDetails';
 import getUserDeviceInfo from '../../utils/getUserDeviceInfo';
 import { removeLocalRecord } from '../../actions/localRecord';
 import { createWebprove } from '../../actions/webprove';
@@ -46,6 +47,7 @@ const SavePreview = ({ route }) => {
     const hash = await generateHash(save.uri);
     const userDeviceInfo = await getUserDeviceInfo();
     const location = await getLocation();
+    const locationDetails = await getLocationDetails(location.latitude, location.longitude);
     const data = {
       transactions: [{ transaction: false }, { transaction: false }],
       timestamp: new Date().toUTCString(), 
@@ -53,9 +55,6 @@ const SavePreview = ({ route }) => {
       hash,
       app: null,
       ip: userDeviceInfo.ip,
-      city: userDeviceInfo.city,
-      region_code: userDeviceInfo.region,
-      country_name: userDeviceInfo.country,
       timezone: userDeviceInfo.timezone,
       org: userDeviceInfo.org,
       email: user.email, 
@@ -72,7 +71,8 @@ const SavePreview = ({ route }) => {
       }, 
       pinata: {}, 
       link: "", 
-      ...location
+      ...location,
+      ...locationDetails
     };
 
     await createWebprove(data);
