@@ -71,7 +71,8 @@ const SavePreview = ({ route }) => {
         urls: "",
         start: save.date,
         stop: save.date + videoInfo.duration, 
-        duration: videoInfo.duration / 1000
+        duration: videoInfo.duration / 1000,
+        duraction: videoInfo.duration / 1000
       }, 
       pinata: {}, 
       link: "", 
