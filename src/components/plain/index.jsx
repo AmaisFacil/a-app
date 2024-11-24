@@ -6,13 +6,15 @@ import { Container, ValueContainer, ValueText } from './styles';
 import Description from '../description';
 import Button from '../button';
 import Title from '../title';
+import storage from '../../utils/storage';
 
 const Plain = ({ plain }) => {
     
   const { name, description, monthlyPrice, credits } = plain;
 
-  const handleCheckout = () => {
-    const url = 'https://agenciamaisfacil.com.br/#planos';
+  const handleCheckout = async () => {
+    const token = await storage.get("token");
+    const url = 'https://agenciamaisfacil.com.br/plans?token='+ token.response;
     Linking.openURL(url)
   };
 
